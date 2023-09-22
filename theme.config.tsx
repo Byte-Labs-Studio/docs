@@ -2,16 +2,16 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <span>Byte Labs Documentation</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://docs.byte-labs.net/',
   },
   chat: {
-    link: 'https://discord.com',
+    link: 'https://discord.gg/R8bjTWPCGy',
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: 'https://github.com/Byte-Labs-Project/docs',
   footer: {
-    text: 'Nextra Docs Template',
+    text: 'Byte Labs Documentation',
   },
 }
 
