@@ -1,0 +1,52 @@
+import ResourceLinks from '@components/resource-links';
+import { Steps } from 'nextra/components'
+
+# BL Bridge
+
+A highly useful resource for FiveM servers that allows you to easily create resources with that are compatible with `esx` `qb` and `ox`.
+
+Current Features:
+- Core: `ox`, `qb`, `esx`
+- Target: `ox`, `qb`
+- Progressbar: `ox`, `qb`
+- Notification: `ox`, `qb`
+- Context Menu: `ox`, `qb`
+- Radial Menu: `ox`, `qb`
+
+<ResourceLinks repo="https://github.com/Byte-Labs-Project/bl_bridge" />
+
+## Installation
+
+<Steps>
+
+### Download the latest [release](https://github.com/Byte-Labs-Project/bl_bridge/releases) of BL Bridge.
+
+### Extract the contents of the zip file into your `resources` folder.
+
+### Add `ensure bl_bridge` to your `server.cfg` file.
+
+### Configure the convars file to your liking.
+```bash
+# Frameworks 'ox' | 'qb' | 'esx' | 'custom'
+setr bl:framework 'qb' 
+
+# Inventories 'ox' | 'qb' | 'esx' | 'ps' | 'custom'
+setr bl:inventory 'ox'
+
+# Context 'ox' | 'qb' | 'esx' | 'custom'
+setr bl:context 'ox'
+
+# Target 'ox' | 'qb' | 'esx' | 'custom'
+setr bl:target 'ox'
+
+# Progress 'ox' | 'qb' | 'esx' | 'custom'
+setr bl:progress 'ox'
+
+# Radial 'ox' | 'qb' | 'esx' | 'custom'
+setr bl:radial 'ox'
+
+# Notification 'ox' | 'qb' | 'esx' | 'custom'
+setr bl:notify 'ox'
+```
+
+</Steps>
