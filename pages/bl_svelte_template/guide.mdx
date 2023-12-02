@@ -1,0 +1,77 @@
+---
+title: Template Guide
+---
+
+# Template Guide
+
+Below is a list of functions that are available to use in your template.
+
+
+## Configure
+
+In `app.svelte` there is an object that you can configure.
+
+```js
+    CONFIG.set({
+        fallbackResourceName: 'debug',
+        allowEscapeKey: true,
+    });
+```
+
+- fallbackResourceName: `string` The resource name to use if the resource name is not found while using localhost in the game.
+- allowEscapeKey: `boolean` Allow the escape key to close the UI.
+
+
+## Client
+
+### SendNUIEvent
+
+This is basically a shorthand for `SendNUIMessage` but it will automatically structure the data for you suitable for the UI.
+
+```lua
+SendNUIEvent(event, data)
+```
+- event: `string` The event name to send to the NUI
+- data: `any` The data to send to the NUI
+
+## UI
+
+### SendEvent
+
+Send an event to the Client
+
+```js
+SendEvent(event, data);
+```
+
+- event: `string` The event name to send to the client
+- data: `any` The data to send to the client
+
+### TempReceiveEvent
+
+A disposable listener for an event from the Client.
+
+YOU MUST DISPOSE. IF NOT THE LISTENER WILL KEEP LISTENING AND WILL CAUSE MEMORY LEAKS.
+
+```js
+// Listen for the event
+const dispose = TempReceiveEvent(event, callback);
+
+// Dispose the listener
+dispose();
+```
+- event: `string` The event name to listen for
+- callback: `function` The callback to run when the event is received
+
+Return:
+- dispose: `function` The function to call to dispose the listener
+
+
+### Note
+There are other functions available but as a developer using the template properly, you dont really need to use them.
+
+These functions include:
+- `ReceiveEvent`
+- `DebugEventSend`
+- `DebugEventReceive`
+- `DebugEventCallback`

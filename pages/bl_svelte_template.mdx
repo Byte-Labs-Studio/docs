@@ -1,0 +1,44 @@
+import ResourceLinks from '@components/resource-links';
+import { Steps } from 'nextra/components'
+
+# BL Svelte Template
+
+A template for creating FiveM resources using Svelte.
+
+Current Features:
+- Svelte 4.0.
+- Debug Menu for testing in browser.
+    - Can add `buttons`, `sliders`, `inputs` to emulate data being sent from the client.
+    - Can define Event Handlers that pretend its being received in the client and can send back data.
+- TailwindCSS.
+- Can use localhost in fxmanifest for Hot Reloading inside FiveM which is no different from built version.
+
+<ResourceLinks repo="https://github.com/Byte-Labs-Project/bl_svelte_template" />
+
+## Installation
+
+<Steps>
+
+### Open the repo of the [Svelte Template](https://github.com/Byte-Labs-Project/bl_svelte_template) and click "Use this template".
+![usetempalte](https://cdn.discordapp.com/attachments/1143458172129005619/1180393086430482452/image.png?ex=657d41ba&is=656accba&hm=2b8a931e6dbe6cc3ed93cd7ea1635fa6b16bb48f54ca780a825ebd8dcc37f49b&)
+
+### Set Up your new repo.
+
+### Open your new repo in VSCode.
+
+### Initialise
+Open a new terminal and run `pnpm install` or `npm install`.
+
+### Run Development server
+`pnpm run dev` or `npm run dev` to start the development server.
+
+### Setting Up listeners
+`web > utils > listeners.ts` is where you can add your event handlers that will always be listening for events from the client.
+
+### Setting Up Debug listeners
+`web > utils > debug > receivers.ts` are the events that will emulate a client `RegisterNUICallback` and can optionally send back data after processing it.
+
+### Setting Up Debug senders
+`web > utils > debug > senders.ts` is where you can add your debug menu items that will show up in the debug menu when in the browser.
+
+</Steps>
