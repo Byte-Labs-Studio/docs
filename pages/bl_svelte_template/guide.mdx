@@ -29,7 +29,7 @@ In `app.svelte` there is an object that you can configure.
 This is basically a shorthand for `SendNUIMessage` but it will automatically structure the data for you suitable for the UI.
 
 ```lua
-SendNUIEvent(event, data)
+    SendNUIEvent(event, data)
 ```
 - event: `string` The event name to send to the NUI
 - data: `any` The data to send to the NUI
@@ -41,7 +41,7 @@ SendNUIEvent(event, data)
 Send an event to the Client
 
 ```js
-SendEvent(event, data);
+    SendEvent(event, data);
 ```
 
 - event: `string` The event name to send to the client
@@ -54,11 +54,11 @@ A disposable listener for an event from the Client.
 YOU MUST DISPOSE. IF NOT THE LISTENER WILL KEEP LISTENING AND WILL CAUSE MEMORY LEAKS.
 
 ```js
-// Listen for the event
-const dispose = TempReceiveEvent(event, callback);
+    // Listen for the event
+    const dispose = TempReceiveEvent(event, callback);
 
-// Dispose the listener
-dispose();
+    // Dispose the listener
+    dispose();
 ```
 - event: `string` The event name to listen for
 - callback: `function` The callback to run when the event is received
