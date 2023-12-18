@@ -4,7 +4,9 @@ title: Interfaces
 
 import { Tabs, Tab } from 'nextra-theme-docs';
 
-# Interfaces
+# Bridge Interfaces
+
+## Overview
 
 Includes a bridge for the following:
     - Progressbar
@@ -13,14 +15,13 @@ Includes a bridge for the following:
     - Radial Menu
 
 
-# Notification
-
+## Notification
 
 ```lua
-Framework.notify({
-        description = 'Notification description',
-        type = 'success'
-    })
+    Framework.notify({
+            description = 'Notification description',
+            type = 'success'
+        })
 ```
 
 - description?: `string`
@@ -46,3 +47,26 @@ Extra Options:
     - iconColor?: `string`
   </Tab>
 </Tabs>
+
+## Context Menu
+
+```lua
+    local Context = Framework.context
+    @type data: {
+            title = string,
+            description = string,
+            icon = Icon(string, ),
+            disabled = boolean,
+            event = string,
+            args = {xirvin = 'dick'}
+    },
+    Context.openContext(data)
+    Context.closeContext()
+```
+- title?: `string`
+- description: `string`
+- icon: `string`
+- disabled: `boolean`
+- event: `string`
+- args: `any`
+

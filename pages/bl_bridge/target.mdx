@@ -1,0 +1,60 @@
+---
+title: Target
+---
+
+
+# Bridge Target
+
+## Overview
+
+Target:
+    - Box Zone
+    - Circle Zone
+    - Remove Zone
+
+## Usage
+
+Options
+- label: `string`
+- icon: `string`
+- onSelect: `function`
+
+
+```lua
+    -- Example
+    local Target = Framework.target
+
+    local options = {
+        coords = vector3(428, -973.44, 30.71),
+        size = vector3(2, 2, 2),
+        rotation = 90,
+        distance = 5.0,
+        debug = true,
+        options = {
+            {
+                label = "W",
+                icon = "fa-solid fa-scissors",
+                onSelect = function()
+                    print("frist")
+                end
+            },
+            {
+                label = "Destroy",
+                icon = "fa-regular fa-eye",
+                onSelect = function()
+                    print("second")
+                end
+            }
+        }
+    }
+
+    local id = Target.addBoxZone(options)
+    Target.removeZone(id)
+```
+
+- coords: `vector3`
+- size: `vector3`
+- rotation?: `number`
+- distance?: `number`
+- debug?: `boolean`
+- options?: `table`
