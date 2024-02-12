@@ -1,0 +1,36 @@
+---
+title: Exports
+---
+
+# Exports
+
+## Options
+
+- coords: `vector3`
+- key?: `string`
+- shape?: `circle` | `square` | `hex`
+- spriteIndicator?: `boolean`
+- colour?: `table` rgba `{0, 0, 255, 255}`
+- onEnter?: `function`
+- onExit?: `function`
+- nearby?: `function`, onTick
+- distance?: `number`
+- canInteract? : `function`
+- boneId: `number`, will work and require for `spriteOnBone`
+- entity: `entityId`, will work and require for `spriteOnBone` and `spriteOnEntity`
+
+## Usage
+```lua
+    local bl_sprites = exports.bl_sprites
+    bl_sprites:sprite(options)
+    bl_sprites:spriteOnEntity(options)
+    local sprite = bl_sprites:spriteOnBone(options)
+    sprite:removeSprite()
+    sprite:updateTargetData(key, value)
+    
+````
+
+- options: `table`
+- sprite: `class`
+- key: `string` options index
+- value: `any` options value
