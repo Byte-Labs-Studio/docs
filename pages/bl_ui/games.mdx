@@ -124,3 +124,20 @@ The player must press the key when the the line is inside the target zone.
     - `E`
 
 ![rapidlines](https://cdn.discordapp.com/attachments/1143458172129005619/1177915959957266452/image.png?ex=65743eb9&is=6561c9b9&hm=a60096776ead07a96a31476f1b899235e9ecf5fefdfafda02b1b618deab17da2&)
+
+## Circle Shake
+
+Component shakes when the user segment is over an invisible target.
+    
+```lua
+    local success = bl_ui:CircleShake(iterations, difficulty, numberOfStages)
+```
+
+- iterations?: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- difficulty?: `number` (`1-100`) is the difficulty of the minigame, this will affect the size of the invisible target.
+    - 50 is the default difficulty.
+- numberOfStages?: `number` is the amount of set of stages the player has to press.
+    - 3 is the default amount of keys.
+
+![circleshake](https://cdn.discordapp.com/attachments/1210775275919646780/1210896430538162196/307513299-f8630571-c6c5-41f2-aa32-3f8d13aeeddb.png?ex=65ec3a2e&is=65d9c52e&hm=a320f0e9abc1c5b9fe51009b6fec5b4be7844a7b78b76d94c0e678ef766e3fff&)
