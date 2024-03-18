@@ -1,0 +1,33 @@
+---
+title: Client
+---
+
+## Usage
+```lua
+--import
+local core = Framework.core or exports.bl_bridge:core()
+```
+### Player Data
+```lua
+local player = core.getPlayerData()
+print(player.cid)
+print(player.money) -- cash
+print(player.inventory)
+print(player.job)
+print(player.firstName)
+print(player.lastName)
+print(player.phone)
+print(player.gender)
+print(player.dob)
+```
+- player: 
+    - cid: `string`
+    - money: `number`
+    - inventory: `table`
+    - job: `table` (look `core/server#job`)
+    - firstName: `string`
+    - lastName: `string`
+    - phone: `string`
+    - gender: `male` | `female`
+    - dob: `string`
+       
