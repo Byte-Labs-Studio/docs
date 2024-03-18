@@ -1,0 +1,62 @@
+---
+title: Server
+---
+
+## Usage
+```lua
+--import
+local core = Framework.core or exports.bl_bridge:core()
+```
+
+## Player
+### Balance
+```lua
+local player = core.GetPlayer(src)
+player.getBalance(type --[['cash' | 'bank']])
+player.removeBalance(type, amount)
+player.addBalance(type, amount)
+```
+- type: `cash` | `bank`
+- amount: `number`
+
+### Job
+```lua
+local player = core.GetPlayer(src)
+player.setJob(job, grade)
+local job = player.job 
+print(job)
+--[[
+    job.name
+    job.label, 
+    job.onduty, 
+    job.isboss, 
+    job.grade.level,
+    job.grade.label,
+    job.payment
+]]
+```
+- job: `string`
+- grade: `number`
+- job data: 
+    - name: `string`
+    - label: `string`
+    - onduty?: `boolean`
+    - isboss: `boolean`
+    - grade:
+        - name: `number`
+        - label: `string`
+        - payment?: `number`
+
+### PlayerData
+```lua
+    local player = core.GetPlayer(src)
+    local name = player.name -- char full name
+    local id = player.id -- char id/citizenid/cid
+    local gender = player.gender
+    local dob = player.dob
+```
+## Core
+```lua
+core.CommandAdd(name, permission, cb)
+core.RegisterUsableItem(name, cb)
+```

@@ -1,0 +1,48 @@
+---
+title: Server
+---
+
+```lua
+--import
+local core = Framework.core or exports.bl_bridge:core()
+local inventory = Framework.inventory or exports.bl_bridge:inventory()
+```
+
+### Player Items interactions
+```lua
+local player = core.GetPlayer(source)
+player.addItem(item, amount, metadata, slot)
+player.removeItem(item, amount)
+player.getItem(item)
+player.items -- get player items
+```
+- source: `number`
+- item: `string`
+- amount: `number`
+- metadata: `table`
+- slot: `number`
+
+## registerUsableItem
+```lua
+core.registerUsableItem(item, cb)
+```
+- item: `string`
+- cb: `function`
+
+## registerInventory
+```lua
+inventory.registerInventory(id, {
+   type = invType,
+   name = name,
+   items = items,
+   maxWeight = maxWeight,
+   slots = slots
+})
+```
+
+- id: `string`
+- invType: `shop` | `stash`
+- name?: `string`
+- items?: `itemsData` as ox (this will not work on `stash` type)
+- maxWeight?: `number` (this will not work on `shop` type)
+- slots?: `number` (this will not work on `shop` type)

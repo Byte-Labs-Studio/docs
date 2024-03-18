@@ -10,51 +10,82 @@ title: Target
 Target:
     - Box Zone
     - Circle Zone
+    - Local Entity
+    - Entity
     - Remove Zone
+    - Remove Entity
+    - Remove Local Entity
 
 ## Usage
 
-Options
-- label: `string`
-- icon: `string`
-- onSelect: `function`
-
-
 ```lua
     -- Example
-    local Target = Framework.target
+    local target = Framework.target or exports.bl_bridge:target()
 
-    local options = {
+    local selectOptions = {
+        {
+            label = "W",
+            icon = "fa-solid fa-scissors",
+            onSelect = function()
+                print("first")
+            end
+        },
+        {
+            label = "Destroy",
+            icon = "fa-regular fa-eye",
+            onSelect = function()
+                print("second")
+            end
+        }
+    }
+    local zoneOptions = {
         coords = vector3(428, -973.44, 30.71),
         size = vector3(2, 2, 2),
         rotation = 90,
         distance = 5.0,
         debug = true,
-        options = {
-            {
-                label = "W",
-                icon = "fa-solid fa-scissors",
-                onSelect = function()
-                    print("frist")
-                end
-            },
-            {
-                label = "Destroy",
-                icon = "fa-regular fa-eye",
-                onSelect = function()
-                    print("second")
-                end
-            }
-        }
+        options = selectOptions
     }
 
-    local id = Target.addBoxZone(options)
-    Target.removeZone(id)
+    local id = target.addBoxZone(zoneOptions)
+    local id = target.addCircleZone(zoneOptions)
+    target.removeZone(id)
+
+
+    target.addLocalEntity({
+        entity = entity,
+        options = selectOptions
+    })
+    target.addEntity({
+        entity = entity,
+        options = selectOptions
+    })
+    target.removeLocalEntity(entity, names)
+    target.removeEntity(entity, names)
 ```
 
+Options
+
+### Entity
+- entity: `ent`
+- distance?: `number`
+
+### Zone
+- label: `string`
 - coords: `vector3`
 - size: `vector3`
 - rotation?: `number`
 - distance?: `number`
+- drawSprite?: `boolean`
+- icon?: `string`
 - debug?: `boolean`
 - options?: `table`
+
+### options 
+- label: `string`
+- onSelect?: `function`
+- distance?: `number`
+- serverEvent? `string`
+- event? `string`
+- canInteract?: `function`
+- groups?: `{[job] = [grade]}`

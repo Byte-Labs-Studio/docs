@@ -1,0 +1,26 @@
+---
+title: Client
+---
+```lua
+--import
+local inventory = Framework.inventory or exports.bl_bridge:inventory()
+```
+## openInventory
+### (Note: you need to register inventory with server `registerInventory` before using this)
+```lua
+inventory.openInventory(invType, id) 
+```
+- id: `string`
+- invType: `shop` | `stash`
+
+### hasItem
+```lua
+inventory.hasItem(itemName, itemCount)
+```
+- itemName: `string`
+- itemCount: `number`
+
+### playerItems
+```lua
+inventory.playerItems() -- return player items
+```
