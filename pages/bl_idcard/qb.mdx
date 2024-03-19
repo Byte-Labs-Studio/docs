@@ -1,0 +1,57 @@
+---
+title: qb
+---
+## Instructions
+
+## qb-multicharacter
+- Replace [GiveStarterItems](https://github.com/qbcore-framework/qb-multicharacter/blob/main/server/main.lua#L6) function with 
+```lua
+local function GiveStarterItems(source)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    for _, v in pairs(QBCore.Shared.StarterItems) do
+        if v.item == "id_card" or v.item == "driver_license" then
+           exports.bl_idcard:createLicense(source, v.item)
+        else
+           Player.Functions.AddItem(v.item, v.amount)
+        end
+    end
+end
+```
+
+## qb-inventory
+- Delete 'driver_license' [CreateUsableItem](https://github.com/qbcore-framework/qb-inventory/blob/main/server/main.lua#L2452)
+- Delete 'id_card' [CreateUsableItem](https://github.com/qbcore-framework/qb-inventory/blob/main/server/main.lua#L2475)
+- Replace in command [giveitem](https://github.com/qbcore-framework/qb-inventory/blob/main/server/main.lua#L2379C4-L2390C41)
+```lua
+    if itemData['name'] == 'id_card' or itemData['name'] == 'driver_license' or itemData['name'] == 'weaponlicense' or itemData['name'] == 'lawyerpass' then
+		exports.bl_idcard:createLicense(source, itemData['name'])
+```
+
+## qb-cityhall
+- Replace [giveStarterItems](https://github.com/qbcore-framework/qb-cityhall/blob/main/server/main.lua#L19) function with 
+```lua
+local function giveStarterItems()
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then return end
+    for _, v in pairs(QBCore.Shared.StarterItems) do
+        if v.item == "id_card" or v.item == "driver_license" then
+           exports.bl_idcard:createLicense(source, v.item)
+        else
+           Player.Functions.AddItem(v.item, v.amount)
+        end
+    end
+end
+```
+- Replace [qb-cityhall:server:requestId](https://github.com/qbcore-framework/qb-cityhall/blob/main/server/main.lua#L49) event with 
+```lua
+RegisterNetEvent('qb-cityhall:server:requestId', function(item, hall)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+    local itemInfo = Config.Cityhalls[hall].licenses[item]
+    if not Player.Functions.RemoveMoney('cash', itemInfo.cost, 'cityhall id') then return TriggerClientEvent('QBCore:Notify', src, ('You don\'t have enough money on you, you need %s cash'):format(itemInfo.cost), 'error') end
+    exports.bl_idcard:createLicense(src, item)
+end)
+```
