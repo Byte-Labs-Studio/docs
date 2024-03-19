@@ -3,6 +3,16 @@ title: esx
 ---
 ## Instructions
 
+## Database
+- Insert this query
+```sql
+INSERT INTO items (name, label, weight, rare, can_remove)
+VALUES
+('id_card', 'Id Card', 1, 0, 1),
+('driver_license', 'Driver License', 1, 0, 1),
+('weaponlicense', 'Weapon License', 1, 0, 1);
+```
+
 ## esx_multicharacter
 - Replace in [esx_multicharacter:CharacterChosen](https://github.com/esx-framework/esx_core/blob/main/%5Bcore%5D/esx_multicharacter/server/main.lua#L211-L212) event with
 ```lua
