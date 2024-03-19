@@ -14,11 +14,15 @@ VALUES
 ```
 
 ## esx_multicharacter
-- Replace in [esx_multicharacter:CharacterChosen](https://github.com/esx-framework/esx_core/blob/main/%5Bcore%5D/esx_multicharacter/server/main.lua#L211-L212) event with
+- Replace [esx_identity:completedRegistration](https://github.com/esx-framework/esx_core/blob/main/%5Bcore%5D/esx_multicharacter/server/main.lua#L228-L232) event with
 ```lua
-if isNew then
-    awaitingRegistration[source] = charid
-    exports.bl_idcard:createLicense(source, {'id_card', 'driver_license'}) -- make sure to add items
+	AddEventHandler('esx_identity:completedRegistration', function(source, data)
+		TriggerEvent('esx:onPlayerJoined', source, PREFIX..awaitingRegistration[source], data)
+		awaitingRegistration[source] = nil
+		ESX.Players[GetIdentifier(source)] = true
+
+		exports.bl_idcard:createLicense(source, {'id_card', 'driver_license'})
+	end)
 ```
 
 ## esx_license
