@@ -22,14 +22,14 @@ local notify = Framework.notify or exports.bl_bridge:notify()
 
 --client
 notify({
-    description = 'Notification description',
+    title = 'Notification description',
     type = 'success',
     duration = 1000
 })
 
 --server
 notify(source, {
-    description = 'Notification description',
+    title = 'Notification description',
     type = 'success'
     duration = 1000
 })
