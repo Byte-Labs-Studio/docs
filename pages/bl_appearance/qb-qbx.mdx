@@ -2,42 +2,42 @@ import { Steps } from 'nextra/components'
 
 <Steps>
 
-### IT IS HIGHLY RECOMMEND THAT YOU DONT RELY ON BACKWARDS compatibility
+### IT IS HIGHLY RECOMMENDED THAT YOU DON'T RELY ON BACKWARDS COMPATIBILITY
 
-### 1. If you want to start fresh. Remove previous appearance/clothing system skip 
+### 1. If you want to start fresh, remove the previous appearance/clothing system.
 
-### 2. If you dont want to deal with backwards compatibility.
+### 2. If you don't want to deal with backwards compatibility:
 
-### 2.a `qb-clothing`
-    - Go to `qb-clothing/client/main.lua` and comment out everything inside `openMenu` function. Like below:
-        ```lua
-        local function openMenu(allowedMenus)
-            -- previousSkinData = json.encode(skinData)
-            -- creatingCharacter = true
-            -- PlayerData = QBCore.Functions.GetPlayerData()
-            -- local trackerMeta = PlayerData.metadata["tracker"]
-            -- local translations = {}
-            -- for k in pairs(Lang.fallback and Lang.fallback.phrases or Lang.phrases) do
-            --     if k:sub(0, ('ui.'):len()) then
-            --         translations[k:sub(('ui.'):len() + 1)] = Lang:t(k)
-            --     end
-            -- end
-            -- GetMaxValues()
-            -- SendNUIMessage({
-            --     action = "open",
-            --     menus = allowedMenus,
-            --     currentClothing = skinData,
-            --     hasTracker = trackerMeta,
-            --     translations = translations,
-            -- })
-            -- SetNuiFocus(true, true)
-            -- SetCursorLocation(0.9, 0.25)
-            -- FreezeEntityPosition(PlayerPedId(), true)
-            -- enableCam()
-        end
-        ```
+#### 2.a `qb-clothing`
+- Go to `qb-clothing/client/main.lua` and comment out everything inside the `openMenu` function as shown below:
+    ```lua
+    local function openMenu(allowedMenus)
+        -- previousSkinData = json.encode(skinData)
+        -- creatingCharacter = true
+        -- PlayerData = QBCore.Functions.GetPlayerData()
+        -- local trackerMeta = PlayerData.metadata["tracker"]
+        -- local translations = {}
+        -- for k in pairs(Lang.fallback and Lang.fallback.phrases or Lang.phrases) do
+        --     if k:sub(0, ('ui.'):len()) then
+        --         translations[k:sub(('ui.'):len() + 1)] = Lang:t(k)
+        --     end
+        -- end
+        -- GetMaxValues()
+        -- SendNUIMessage({
+        --     action = "open",
+        --     menus = allowedMenus,
+        --     currentClothing = skinData,
+        --     hasTracker = trackerMeta,
+        --     translations = translations,
+        -- })
+        -- SetNuiFocus(true, true)
+        -- SetCursorLocation(0.9, 0.25)
+        -- FreezeEntityPosition(PlayerPedId(), true)
+        -- enableCam()
+    end
+    ```
 
-    - Got to `qb-clothing/client/main.lua` around `line 1437` change the `QBCore:Client:OnPlayerLoaded` event to the following:
+- Go to `qb-clothing/client/main.lua` around `line 1437` and change the `QBCore:Client:OnPlayerLoaded` event to the following:
     ```lua
     RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
         -- TriggerServerEvent("qb-clothes:loadPlayerSkin")
@@ -46,29 +46,28 @@ import { Steps } from 'nextra/components'
         -- loadStores()
     end)
     ```
-    - We need to keep the resource functioning but only when we need it
-    - Got to `qb-clothing/client/main.lua` around `line 1582`, above the `refreshskin` command add `--[[` and `]]` at the end of the file. Like below:
+
+- To keep the resource functioning only when needed, go to `qb-clothing/client/main.lua` around `line 1582`, and add `--[[` above the `refreshskin` command and `]]` at the end of the file like below:
     ```lua
-        --[[
-        -- Commands
-        RegisterCommand("refreshskin", function()
-        ...
-        ]]
+    --[[
+    -- Commands
+    RegisterCommand("refreshskin", function()
+    ...
+    ]]
     ```
 
-###  Modify `qb-multicharacter:server:getSkin` Callback
-    - Go to the callback definition around `line 183` in `server/main.lua`
-    - Change:
-        ```lua
-        local result = MySQL.query.await('SELECT * FROM playerskins WHERE citizenid = ? AND active = ?', {cid, 1})
-        ```
-        To:
-        ```lua
-        local result = MySQL.query.await('SELECT * FROM appearance WHERE id = ?', {cid})
-        ```
+### Modify `qb-multicharacter:server:getSkin` Callback
+- Go to the callback definition around `line 183` in `server/main.lua` and change:
+    ```lua
+    local result = MySQL.query.await('SELECT * FROM playerskins WHERE citizenid = ? AND active = ?', {cid, 1})
+    ```
+    To:
+    ```lua
+    local result = MySQL.query.await('SELECT * FROM appearance WHERE id = ?', {cid})
+    ```
 
 ### Modify `cDataPed` RegisterNUICallback
-    - Go to the `cDataPed` callback around `line 203` in `client/main.lua`. Replace the event with the following:
+- Go to the `cDataPed` callback around `line 203` in `client/main.lua` and replace the event with the following:
     ```lua
     RegisterNUICallback('cDataPed', function(nData, cb)
         local cData = nData.cData
