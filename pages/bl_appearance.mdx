@@ -1,0 +1,57 @@
+import ResourceLinks from '@components/resource-links';
+import { Steps } from 'nextra/components'
+
+# BL Appearance WIP
+
+An extensive and modern Appearance resource for FiveM servers.
+
+Current Features:
+- Multi Framework Support (Ox, QB, ESX, ND, QBX, Custom)
+- Outfit system
+- Blacklist clothing system
+- Share and receive outfits system
+- Job Outfits system
+- Fully backwards compatible with `illenium`, `qb-clothing` and `fivem-appearance` Appearance resources
+
+<ResourceLinks repo="https://github.com/Byte-Labs-Project/bl_appearance" />
+
+## Installation
+
+<Steps>
+
+### Download the latest [release](https://github.com/overextended/ox_lib/releases) of ox_lib.
+
+### Download the latest [release](https://github.com/Byte-Labs-Project/bl_bridge) of BL Bridge.
+
+### Download the latest [release](https://github.com/Byte-Labs-Project/bl_appearance/releases) of BL Appearance.
+
+### Download the latest [release](https://github.com/Byte-Labs-Project/bl_sprites) of BL Sprites.
+
+### Extract the contents of the zip file into your `resources` folder.
+
+### Run the SQL file in your database
+    - Download the `bl_appearance.sql` file from the [releases](https://github.com/Byte-Labs-Project/bl_appearance/releases) page.
+    - Import the file into your database.
+
+
+### Download the `fivem-builders`
+   - [`fivem-builders`](https://github.com/Z3rio/fivem-builders)
+   - Replace the contents of the `[builders]` directory with the downloaded files from `fivem-builders`.
+    - **Relative Path:** `resources\[cfx-default]\[system]\[builders]`
+
+### Add `ensure bl_appearance` to your `server.cfg` file.
+    - `ox_lib` is required first.
+    - `bl_bridge` is required second.
+    - `bl_sprites` is required third.
+    - `bl_appearance` is required fourth.
+
+### Configure your previous appearance/clothing system
+    - Go to `bl_appearance/data/config.lua` and configure the `bl_appearance` settings.
+
+### Navigate below for your framework
+    - [QB-QBX](/bl_appearance/qb-qbx)
+    - [ESX](/bl_appearance/esx)
+    - [ND](/bl_appearance/nd)
+
+
+</Steps>
