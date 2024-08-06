@@ -11,6 +11,14 @@ import { Steps } from 'nextra/components'
     ```
 
 ### MODIFY ES EXTENDED
+- Replace `server/main.lua` line 6
+```lua
+local loadPlayer = "SELECT `accounts`, `job`, `job_grade`, `group`, `position`, `inventory`, `skin`, `loadout`, `metadata`"
+```
+With
+```lua
+local loadPlayer = "SELECT users.accounts, users.job, users.job_grade, users.group, users.position, users.inventory, appearance.skin AS skin, users.loadout, users.metadata"
+```
 - Replace `server/main.lua` line 20
     ```lua
     loadPlayer = loadPlayer .. " FROM `users` WHERE identifier = ?"
