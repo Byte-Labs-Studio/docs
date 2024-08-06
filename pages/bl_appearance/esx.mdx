@@ -1,0 +1,141 @@
+import { Steps } from 'nextra/components'
+
+<Steps>
+### Remove Current Resources
+    ```
+    skinchanger
+    esx_skin
+    esx_barber
+    esx_clothshop
+    All esx_skin, skinchanger dependency
+    ```
+
+### MODIFY ES EXTENDED
+- Replace `server/main.lua` line 20
+    ```lua
+    loadPlayer = loadPlayer .. " FROM `users` WHERE identifier = ?"
+    ```
+    With
+    ```lua
+    loadPlayer = loadPlayer .. " FROM users LEFT JOIN appearance ON users.identifier = appearance.id WHERE identifier = ?"
+    ```
+
+### MODIFY ESX MULTICHARACTER
+- Replace `server/main` 
+    ```lua
+    local function setupCharacters(source)
+        while not isDatabaseConnected do Wait(1000) end
+
+        local characters
+        local identifier = ESX.GetIdentifier(source)
+        ESX.Players[identifier] = true
+
+        local slots = MySQL.scalar.await("SELECT slots FROM multicharacter_slots WHERE identifier = ?", { identifier }) or SLOTS
+        local result = MySQL.query.await("SELECT identifier, accounts, job, job_grade, firstname, lastname, dateofbirth, sex, skin, disabled FROM users WHERE identifier LIKE ? LIMIT ?", { ("%s%%:%s"):format(PREFIX, identifier), slots })
+
+        if result then
+            local characterCount = #result
+            characters = table.create(0, characterCount)
+
+            for i = 1, characterCount do
+                local data = result[i]
+                local job, grade = data.job or "unemployed", tostring(data.job_grade)
+
+                if ESX.DoesJobExist(job, grade) then
+                    grade = job ~= "unemployed" and ESX.Jobs[job].grades[grade]?.label or ""
+                    job = ESX.Jobs[job].label
+                else
+                    job = ESX.Jobs["unemployed"]?.label
+                    grade = ""
+                end
+
+                local accounts = json.decode(data.accounts)
+                local id = tonumber(string.sub(data.identifier, #PREFIX+1, string.find(data.identifier, ":")-1)) --[[@as number]]
+
+                characters[id] = {
+                    id = id,
+                    bank = accounts.bank,
+                    money = accounts.money,
+                    job = job,
+                    job_grade = grade,
+                    firstname = data.firstname,
+                    lastname = data.lastname,
+                    dateofbirth = data.dateofbirth,
+                    skin = data.skin and json.decode(data.skin) or {},
+                    disabled = data.disabled,
+                    sex = data.sex == "m" and _U("male") or _U("female")
+                }
+            end
+        end
+
+        TriggerClientEvent("esx_multicharacter:SetupUI", source, characters, slots)
+    end
+    ``` 
+    with 
+    ```lua
+    local function mergeTables(...)
+        local mergedTable = {}
+        for _, tbl in ipairs({...}) do
+            if type(tbl) == "table" then
+                for index, value in pairs(tbl) do
+                    mergedTable[index] = value
+                end
+            end
+        end
+        return mergedTable
+    end
+
+    local function SetupCharacters(source)
+        while not databaseConnected do
+            Wait(100)
+        end
+
+        local identifier = GetIdentifier(source)
+        ESX.Players[identifier] = true
+
+        local slots = MySQL.scalar.await("SELECT slots FROM multicharacter_slots WHERE identifier = ?", { identifier }) or SLOTS
+        identifier = PREFIX .. "%:" .. identifier
+
+        local result = MySQL.query.await("SELECT users.identifier, users.accounts, users.job, users.job_grade, users.firstname, users.lastname, users.dateofbirth, users.sex, appearance.skin AS skin, users.disabled, appearance.clothes AS clothes, appearance.tattoos AS tattoos FROM users LEFT JOIN appearance ON users.identifier = appearance.id WHERE identifier LIKE ? LIMIT ?", { identifier, slots })
+        local characters
+
+        if result then
+            local characterCount = #result
+            characters = table.create(0, characterCount)
+
+            for i = 1, characterCount, 1 do
+                local v = result[i]
+                local job, grade = v.job or "unemployed", tostring(v.job_grade)
+
+                if ESX.Jobs[job] and ESX.Jobs[job].grades[grade] then
+                    if job ~= "unemployed" then
+                        grade = ESX.Jobs[job].grades[grade].label
+                    else
+                        grade = ""
+                    end
+                    job = ESX.Jobs[job].label
+                end
+
+                local accounts = json.decode(v.accounts)
+                local id = tonumber(string.sub(v.identifier, #PREFIX + 1, string.find(v.identifier, ":") - 1))
+
+                characters[id] = {
+                    id = id,
+                    bank = accounts.bank,
+                    money = accounts.money,
+                    job = job,
+                    job_grade = grade,
+                    firstname = v.firstname,
+                    lastname = v.lastname,
+                    dateofbirth = v.dateofbirth,
+                    skin = v.skin and mergeTables(json.decode(v.skin), json.decode(v.clothes), json.decode(v.tattoos)) or {},
+                    
+                    disabled = v.disabled,
+                    sex = v.sex == "m" and TranslateCap("male") or TranslateCap("female"),
+                }
+            end
+        end
+
+        TriggerClientEvent("esx_multicharacter:SetupUI", source, characters, slots)
+    end
+    ```
