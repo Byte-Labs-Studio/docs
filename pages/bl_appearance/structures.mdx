@@ -1,0 +1,103 @@
+---
+title: Object Structures
+---
+
+# Structures
+
+Below are the structures of the appearance objects. It is useful to know if you want to use the appearance exports.
+
+## Appearance for exports
+```ts
+type TClothes = {
+    headOverlay: THeadOverlay
+    drawables: TDrawables
+    props: TProps
+}
+
+type TSkin = {
+    headBlend: THeadBlend
+    headStructure: THeadStructure
+    hairColor: THairColor
+    model: number
+}
+
+type TAppearance = TClothes & TSkin & {
+    modelIndex?: number
+    tattoos?: TTattoo[]
+    outfits?: Outfit[]
+}
+```
+
+## Appearance Index Types
+```ts
+type TValue = {
+	index: number
+	value: number
+	id?: string
+    texture?: number
+}
+
+type TProps = {
+    [key: string]: TValue
+}
+
+type TDrawables = {
+	[key: string]: TValue
+}
+
+type THeadStructure = {
+	[key: string]: TValue
+}
+
+
+interface HeadOverlayData {
+    id: string;
+    index: number;
+    overlayValue?: number;
+    colourinterface?: number;
+    colourType?: number;
+    firstColor?: number;
+    secondColor?: number;
+    overlayOpacity?: number;
+    hairColor?: number
+    hairHighlight?: number
+    eyeColor?: number
+};
+
+type THeadOverlay = {
+	[key: string]: HeadOverlayData
+}
+
+type THairColor = {
+	highlight: number
+	color: number
+}
+
+interface THeadBlend  {
+	skinSecond: number
+	skinThird: number
+	shapeSecond: number
+	shapeThird: number
+	shapeFirst: number
+	hasParent: boolean
+	skinMix: number
+	shapeMix: number
+	thirdMix: number
+	skinFirst: number
+}
+
+type TTattooEntry = {
+    label: string
+    hash: number
+    zone: number
+    dlc?: string
+}
+
+type TTattoo = {
+    zoneIndex: number
+    dlcIndex: number
+    tattoo: TTattooEntry
+    id: number
+}
+
+```

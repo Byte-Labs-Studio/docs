@@ -6,9 +6,54 @@ import { Steps } from 'nextra/components'
 
 ### 1. If you want to start fresh, remove the previous appearance/clothing system.
 
-### 2. If you don't want to deal with backwards compatibility:
+### 2. Modify `qb-multicharacter:server:getSkin` Callback
+- Go to the callback definition around `line 183` in `server/main.lua` and change:
+    ```lua
+    local result = MySQL.query.await('SELECT * FROM playerskins WHERE citizenid = ? AND active = ?', {cid, 1})
+    ```
+    To:
+    ```lua
+    local result = MySQL.query.await('SELECT * FROM appearance WHERE id = ?', {cid})
+    ```
 
-#### 2.a `qb-clothing`
+### 3. Modify `cDataPed` RegisterNUICallback
+- Go to the `cDataPed` callback around `line 203` in `client/main.lua` and replace the event with the following:
+    ```lua
+    RegisterNUICallback('cDataPed', function(nData, cb)
+        local cData = nData.cData
+        SetEntityAsMissionEntity(charPed, true, true)
+        DeleteEntity(charPed)
+        if cData ~= nil then
+            if not cached_player_skins[cData.citizenid] then
+
+                local data = exports.bl_appearance:GetPlayerPedAppearance(cData.citizenid)
+
+                cached_player_skins[cData.citizenid] = {model = data.model, data = data}
+            end
+
+            local model = cached_player_skins[cData.citizenid].model
+            local data = cached_player_skins[cData.citizenid].data
+
+            model = model ~= nil and tonumber(model) or false
+
+            if model ~= nil then
+                initializePedModel(model, json.decode(data))
+            else
+                initializePedModel()
+            end
+            cb("ok")
+        else
+            initializePedModel()
+            cb("ok")
+        end
+    end)
+    ```
+
+
+## If you want to trouble yourself with backwards compatibility, see below for the `qb-clothing` instructions. But highly recommend you don't do this and just have your players have a wipe for their appearance.
+- Illenium and fivem-appearance is WIP, or you can figure it out yourself.
+
+#### `qb-clothing`
 - Go to `qb-clothing/client/main.lua` and comment out everything inside the `openMenu` function as shown below:
     ```lua
     local function openMenu(allowedMenus)
@@ -55,48 +100,4 @@ import { Steps } from 'nextra/components'
     ...
     ]]
     ```
-
-### Modify `qb-multicharacter:server:getSkin` Callback
-- Go to the callback definition around `line 183` in `server/main.lua` and change:
-    ```lua
-    local result = MySQL.query.await('SELECT * FROM playerskins WHERE citizenid = ? AND active = ?', {cid, 1})
-    ```
-    To:
-    ```lua
-    local result = MySQL.query.await('SELECT * FROM appearance WHERE id = ?', {cid})
-    ```
-
-### Modify `cDataPed` RegisterNUICallback
-- Go to the `cDataPed` callback around `line 203` in `client/main.lua` and replace the event with the following:
-    ```lua
-    RegisterNUICallback('cDataPed', function(nData, cb)
-        local cData = nData.cData
-        SetEntityAsMissionEntity(charPed, true, true)
-        DeleteEntity(charPed)
-        if cData ~= nil then
-            if not cached_player_skins[cData.citizenid] then
-
-                local data = exports.bl_appearance:GetPlayerPedAppearance(cData.citizenid)
-
-                cached_player_skins[cData.citizenid] = {model = data.model, data = data}
-            end
-
-            local model = cached_player_skins[cData.citizenid].model
-            local data = cached_player_skins[cData.citizenid].data
-
-            model = model ~= nil and tonumber(model) or false
-
-            if model ~= nil then
-                initializePedModel(model, json.decode(data))
-            else
-                initializePedModel()
-            end
-            cb("ok")
-        else
-            initializePedModel()
-            cb("ok")
-        end
-    end)
-    ```
-
 </Steps>
