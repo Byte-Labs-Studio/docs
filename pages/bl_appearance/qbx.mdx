@@ -1,0 +1,28 @@
+import { Steps } from 'nextra/components'
+
+---
+title: QBX Installation
+---
+
+<Steps>
+#### First, to migrate old skins, start by launching the Illenium appearance script and then connect to the server solo. Once connected, use the command /migrate (make sure you have Illenium configured in the settings). After the migration is complete, you can remove the Illenium appearance script and switch to using only bl_appearance.
+
+#### Now let edit the core so it will be compatible
+
+### Modify `previewPed` Function in `client/character.lua` for `qbx-core` with
+
+```lua
+local function previewPed(citizenId)
+    if not citizenId then
+        local model = randomPedModels[math.random(1, #randomPedModels)]
+        lib.requestModel(model, config.loadingModelsTimeout)
+        SetPlayerModel(cache.playerId, model)
+        return
+    end
+
+    exports.bl_appearance:SetPlayerPedAppearance(citizenId)
+end
+```
+
+#### we're done now :)
+</Steps>
