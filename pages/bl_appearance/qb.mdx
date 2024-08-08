@@ -22,36 +22,40 @@ QB Installation
 
 ### 3. Modify `cDataPed` RegisterNUICallback
 - Go to the `cDataPed` callback around `line 203` in `client/main.lua` and replace the event with the following:
-    ```lua
-    RegisterNUICallback('cDataPed', function(nData, cb)
-        local cData = nData.cData
-        SetEntityAsMissionEntity(charPed, true, true)
-        DeleteEntity(charPed)
-        if cData ~= nil then
-            if not cached_player_skins[cData.citizenid] then
+```lua
+RegisterNUICallback('cDataPed', function(nData, cb)
+    local cData = nData.cData
+    SetEntityAsMissionEntity(charPed, true, true)
+    DeleteEntity(charPed)
+    
+    if cData ~= nil then
+        if not cached_player_skins[cData.citizenid] then
+            local data = exports.bl_appearance:GetPlayerPedAppearance(cData.citizenid)
+            cached_player_skins[cData.citizenid] = {model = data.model, data = data}
+        end
 
-                local data = exports.bl_appearance:GetPlayerPedAppearance(cData.citizenid)
+        local model = cached_player_skins[cData.citizenid].model
+        local data = cached_player_skins[cData.citizenid].data
 
-                cached_player_skins[cData.citizenid] = {model = data.model, data = data}
-            end
+        if type(data) == "string" then
+            data = json.decode(data)
+        end
 
-            local model = cached_player_skins[cData.citizenid].model
-            local data = cached_player_skins[cData.citizenid].data
+        model = model ~= nil and tonumber(model) or false
 
-            model = model ~= nil and tonumber(model) or false
-
-            if model ~= nil then
-                initializePedModel(model, json.decode(data))
-            else
-                initializePedModel()
-            end
-            cb("ok")
+        if model then
+            initializePedModel(model, data)
         else
             initializePedModel()
-            cb("ok")
         end
-    end)
-    ```
+
+        cb("ok")
+    else
+        initializePedModel()
+        cb("ok")
+    end
+end)
+```
 
 ### 4. Remove previous dependencies
     - Remove `qb-clothing` from the `dependencies` in `fxmanifest.lua` of `qb-houses` and `qb-apartments`
