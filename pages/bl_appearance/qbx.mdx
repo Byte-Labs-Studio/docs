@@ -19,5 +19,11 @@ local function previewPed(citizenId)
 end
 ```
 
+### Modify `fetchPlayerSkin` Function in `storage/players.lua` for `qbx_core` with
+```lua
+local function fetchPlayerSkin(citizenId)
+    return MySQL.single.await('SELECT * FROM appearance WHERE id = ?', {citizenId})
+end
+```
 #### we're done now
 </Steps>
