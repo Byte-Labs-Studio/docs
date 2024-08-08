@@ -9,12 +9,11 @@ QBX Installation
 ```lua
 local function previewPed(citizenId)
     if not citizenId then
-        local model = randomPedModels[math.random(1, #randomPedModels)]
+        local model = randomPed[math.random(1, #randomPed)]
         lib.requestModel(model, config.loadingModelsTimeout)
         SetPlayerModel(cache.playerId, model)
         return
     end
-
     exports.bl_appearance:SetPlayerPedAppearance(citizenId)
 end
 ```
