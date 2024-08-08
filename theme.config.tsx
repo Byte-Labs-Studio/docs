@@ -4,12 +4,12 @@ import { DocsThemeConfig } from 'nextra-theme-docs'
 const config: DocsThemeConfig = {
   logo: <span>Byte Labs</span>,
   project: {
-    link: 'https://github.com/Byte-Labs-Project',
+    link: 'https://github.com/Byte-Labs-Studio',
   },
   chat: {
     link: 'https://discord.gg/R8bjTWPCGy',
   },
-  docsRepositoryBase: 'https://github.com/Byte-Labs-Project/docs',
+  docsRepositoryBase: 'https://github.com/Byte-Labs-Studio/docs',
   footer: {
     text: 'Byte Labs Documentation',
   },
