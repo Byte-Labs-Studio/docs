@@ -5,15 +5,21 @@ QBX Installation
 ---
 
 <Steps>
+### Modify `randomPed` Function in `client/character.lua` for `qbx-core` with
+```lua
+local function randomPed()
+    local ped = randomPeds[math.random(1, #randomPeds)]
+    lib.requestModel(ped.model, config.loadingModelsTimeout)
+    SetPlayerModel(cache.playerId, ped.model)
+    pcall(function() exports.bl_appearance:SetPedAppearance(PlayerPedId(), ped) end)
+    SetModelAsNoLongerNeeded(ped.model)
+end
+```
+
 ### Modify `previewPed` Function in `client/character.lua` for `qbx-core` with
 ```lua
 local function previewPed(citizenId)
-    if not citizenId then
-        local model = randomPed[math.random(1, #randomPed)]
-        lib.requestModel(model, config.loadingModelsTimeout)
-        SetPlayerModel(cache.playerId, model)
-        return
-    end
+    if not citizenId then randomPed() return end
     exports.bl_appearance:SetPlayerPedAppearance(citizenId)
 end
 ```
