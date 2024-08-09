@@ -10,23 +10,15 @@ QBX Installation
 ```lua
 local function randomPed()
     local ped = randomPeds[math.random(1, #randomPeds)]
-    lib.requestModel(ped.model, config.loadingModelsTimeout)
-    SetPlayerModel(cache.playerId, ped.model)
     pcall(function() exports.bl_appearance:SetPlayerPedAppearance(ped) end)
-    SetModelAsNoLongerNeeded(ped.model)
 end
 
 ---@param citizenId? string
 local function previewPed(citizenId)
     if not citizenId then randomPed() return end
-
     local data = exports.bl_appearance:GetPlayerPedAppearance(citizenId)
-    -- local clothing, model = lib.callback.await('qbx_core:server:getPreviewPedData', false, citizenId)
     if data.model and data then
-        lib.requestModel(data.model, config.loadingModelsTimeout)
-        SetPlayerModel(cache.playerId, data.model)
         pcall(function() exports.bl_appearance:SetPlayerPedAppearance(data) end)
-        SetModelAsNoLongerNeeded(data.model)
     else
         randomPed()
     end
