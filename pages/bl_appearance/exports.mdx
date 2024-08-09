@@ -31,18 +31,18 @@ Below are the appearance exports that are available to use in your resource.
     exports.bl_appearance:SetPlayerPedAppearance(appearance: TAppearance)
 ```
 
-### SetClothes
+### SetPedClothes
 - This function will set the clothes for the player ped.
 
 ```lua
-    exports.bl_appearance:SetClothes(ped: number, clothes: TClothes)
+    exports.bl_appearance:SetPedClothes(ped: number, clothes: TClothes)
 ```
 
-### SetSkin
+### SetPedSkin
 - This function will set the skin for the player ped.
 
 ```lua
-    exports.bl_appearance:SetSkin(ped: number, skin: TSkin)
+    exports.bl_appearance:SetPedSkin(ped: number, skin: TSkin)
 ```
 
 ### SetPedTattoos
@@ -78,17 +78,17 @@ Below are the appearance exports that are available to use in your resource.
     exports.bl_appearance:GetAppearance(ped: number): TAppearance
 ```
 
-### GetClothes
+### GetPedClothes
 - This function will return the clothes of the player ped.
 
 ```lua
-    exports.bl_appearance:GetAppearance(ped: number): TClothes
+    exports.bl_appearance:GetPedClothes(ped: number): TClothes
 ```
 
-### GetSkin
+### GetPedSkin
 - This function will return the skin of the player ped.
 - The argument is the frameworkID of the player. But if its not provided, it will return the player's skin.
 
 ```lua
-    exports.bl_appearance:GeTSkin(ped: number): TSkin
+    exports.bl_appearance:GetPedSkin(ped: number): TSkin
 ```
