@@ -5,24 +5,31 @@ QBX Installation
 ---
 
 <Steps>
-
-### Modify `randomPed & previewPed` Function in `client/character.lua` for `qbx_core` with
+### 1. Modify `qbx_core > client > character.lua`
+-Modify `randomPed` Function around `line 145`  with
 ```lua
 local function randomPed()
-    local ped = randomPeds[math.random(1, #randomPeds)]
-    pcall(function() exports.bl_appearance:SetPlayerPedAppearance(ped) end)
+    local model = `mp_m_freemode_01`
+    exports.bl_appearance:SetModel(cache.ped, model)
 end
+```
 
----@param citizenId? string
+- Modify `previewPed` Function around `line 151` with
+```lua
 local function previewPed(citizenId)
     if not citizenId then randomPed() return end
-    local data = exports.bl_appearance:GetPlayerPedAppearance(citizenId)
-    if data.model and data then
-        pcall(function() exports.bl_appearance:SetPlayerPedAppearance(data) end)
+
+    local appearance = exports.bl_appearance:GetPlayerPedAppearance(citizenId)
+    if appearance and appearance.model then
+        pcall(function() exports.bl_appearance:SetPlayerPedAppearance(appearance) end)
     else
         randomPed()
     end
 end
 ```
+- You can choose to remove `randomPeds` in `line 9` because it is no longer used.
+
+### 2. Remove previous appearance resource
+- Such as `illenium-appearance`
 
 </Steps>

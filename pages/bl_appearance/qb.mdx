@@ -8,9 +8,9 @@ QB Installation
 No backwards compatibility is required.
 
 <Steps>
-### 1. Modify `qb-multicharacter:server:getSkin` Callback
+### 1. Modify `qb-multicharacter` > `server`
 - This is only for other resources that use this callback, but we wont use it anymore because we will call the export directly in the client. But its basically the same thing.
-- Go to the callback definition around `line 183` in `server/main.lua` and change it to:
+- Go to the callback definition for `qb-multicharacter:server:getSkin` around `line 183` in `server/main.lua` and change it to:
     ```lua
     QBCore.Functions.CreateCallback("qb-multicharacter:server:getSkin", function(_, cb, cid)
         local appearance = exports.bl_appearance:GetAppearance(cid)
@@ -21,7 +21,7 @@ No backwards compatibility is required.
     end)
     ```
 
-### 2. Modify `cDataPed` RegisterNUICallback
+### 2. Modify `qb-multicharacter` > `client`
 - Go to the `cDataPed` callback around `line 206` in `client/main.lua` and replace the event with the following:
     ```lua
     RegisterNUICallback('cDataPed', function(nData, cb)
@@ -54,7 +54,7 @@ No backwards compatibility is required.
     end)
     ```
 
-### 3. Modify `initializePedModel` around `line 34` in `client/main.lua` and replace it with the following:
+    - Modify `initializePedModel` around `line 34` in `client/main.lua` and replace it with the following:
     ```lua
     local function initializePedModel(model, data)
         CreateThread(function()
@@ -75,7 +75,7 @@ No backwards compatibility is required.
     end
     ```
 
-### 4. Remove previous dependencies
+### 3. Remove previous dependencies
     - Remove `qb-clothing`, `illenium-appearance` or any other apperance resource you have.
     - Remove `qb-clothing` from the `dependencies` in `fxmanifest.lua` of `qb-houses` and `qb-apartments`
     - Remove any other appearance resources dependencies you had.
