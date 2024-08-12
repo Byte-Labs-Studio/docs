@@ -1,0 +1,91 @@
+---
+title: Server
+---
+
+# Server Appearance Exports
+Below are the appearance exports that are available to use in your resource. From the server side.
+
+## Getters
+
+### GetPlayerAppearance
+- This function will return the appearance of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will return the player's appearance.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+- Return: [TAppearance](./types#TAppearance) The appearance of the player ped.
+```lua
+    exports.bl_appearance:GetPlayerAppearance(frameworkID: number): TAppearance
+```
+
+### GetPlayerSkin
+- This function will return the skin of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will return the player's skin.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+- Return: [TSkin](./types#TSkin) The skin of the player ped.
+```lua
+    exports.bl_appearance:GetPlayerSkin(frameworkID: number): TSkin
+```
+
+### GetPlayerClothes
+- This function will return the clothes of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will return the player's clothes.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+- Return: [TClothes](./types#TClothes) The clothes of the player ped.
+```lua
+    exports.bl_appearance:GetPlayerClothes(frameworkID: number): TClothes
+```
+
+### GetPlayerTattoos
+- This function will return the tattoos of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will return the player's tattoos.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+- Return: [TTattoos](./types#TTattoo) The tattoos of the ped.
+```lua
+    exports.bl_appearance:GetPlayerTattoos(frameworkID: number): TTattoo[]
+```
+
+
+## Savers
+
+### SavePlayerAppearance
+- This function will save the appearance of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will save the player's appearance.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+    - appearance: [TAppearance](./types#TAppearance) The appearance to save.
+```lua
+    exports.bl_appearance:SavePlayerAppearance(frameworkID: number, appearance: TAppearance)
+```
+
+### SavePlayerSkin
+- This function will save the skin of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will save the player's skin.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+    - skin: [TSkin](./types#TSkin) The skin to save.
+```lua
+    exports.bl_appearance:SavePlayerSkin(frameworkID: number, skin: TSkin)
+```
+
+### SavePlayerClothes
+- This function will save the clothes of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will save the player's clothes.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+    - clothes: [TClothes](./types#TClothes) The clothes to save.
+```lua
+    exports.bl_appearance:SavePlayerClothes(frameworkID: number, clothes: TClothes)
+```
+
+### SavePlayerTattoos
+- This function will save the tattoos of the player.
+- The argument is the frameworkID of the player. But if its not provided, it will save the player's tattoos.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+    - tattoos: [TTattoos](./types#TTattoo) The tattoos to save.
+```lua
+    exports.bl_appearance:SavePlayerTattoos(frameworkID: number, tattoos: TTattoo[])
+```

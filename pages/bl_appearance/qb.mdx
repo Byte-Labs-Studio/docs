@@ -13,7 +13,7 @@ No backwards compatibility is required.
 - Go to the callback definition for `qb-multicharacter:server:getSkin` around `line 183` in `server/main.lua` and change it to:
     ```lua
     QBCore.Functions.CreateCallback("qb-multicharacter:server:getSkin", function(_, cb, cid)
-        local appearance = exports.bl_appearance:GetAppearance(cid)
+        local appearance = exports.bl_appearance:GetPlayerAppearance(cid)
         if not appearance then 
             return cb(nil)
         end
