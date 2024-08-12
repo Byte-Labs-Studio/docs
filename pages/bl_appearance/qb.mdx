@@ -4,111 +4,77 @@ import { Steps } from 'nextra/components'
 QB Installation
 ---
 
+## Follow Below for installation for a Fresh Installation.
+No backwards compatibility is required.
+
 <Steps>
-
-#### IT IS HIGHLY RECOMMENDED THAT YOU DON'T RELY ON BACKWARDS COMPATIBILITY
-
-### 1. If you want to start fresh, remove the previous appearance/clothing system.
-
-### 2. Modify `qb-multicharacter:server:getSkin` Callback
-- Go to the callback definition around `line 183` in `server/main.lua` and change:
+### 1. Modify `qb-multicharacter:server:getSkin` Callback
+- This is only for other resources that use this callback, but we wont use it anymore because we will call the export directly in the client. But its basically the same thing.
+- Go to the callback definition around `line 183` in `server/main.lua` and change it to:
     ```lua
-    local result = MySQL.query.await('SELECT * FROM playerskins WHERE citizenid = ? AND active = ?', {cid, 1})
-    ```
-    To:
-    ```lua
-    local result = MySQL.query.await('SELECT * FROM appearance WHERE id = ?', {cid})
-    ```
-
-### 3. Modify `cDataPed` RegisterNUICallback
-- Go to the `cDataPed` callback around `line 203` in `client/main.lua` and replace the event with the following:
-```lua
-RegisterNUICallback('cDataPed', function(nData, cb)
-    local cData = nData.cData
-    SetEntityAsMissionEntity(charPed, true, true)
-    DeleteEntity(charPed)
-    
-    if cData ~= nil then
-        if not cached_player_skins[cData.citizenid] then
-            local data = exports.bl_appearance:GetPlayerPedAppearance(cData.citizenid)
-            cached_player_skins[cData.citizenid] = {model = data.model, data = data}
+    QBCore.Functions.CreateCallback("qb-multicharacter:server:getSkin", function(_, cb, cid)
+        local appearance = exports.bl_appearance:GetAppearance(cid)
+        if not appearance then 
+            return cb(nil)
         end
-
-        local model = cached_player_skins[cData.citizenid].model
-        local data = cached_player_skins[cData.citizenid].data
-
-        if type(data) == "string" then
-            data = json.decode(data)
-        end
-
-        model = model ~= nil and tonumber(model) or false
-
-        if model then
-            initializePedModel(model, data)
-        else
-            initializePedModel()
-        end
-
-        cb("ok")
-    else
-        initializePedModel()
-        cb("ok")
-    end
-end)
-```
-
-### 4. Remove previous dependencies
-    - Remove `qb-clothing` from the `dependencies` in `fxmanifest.lua` of `qb-houses` and `qb-apartments`
-
-
-#### If you want to trouble yourself with backwards compatibility, see below for the `qb-clothing` instructions. But highly recommend you don't do this and just have your players have a wipe for their appearance.
-- Illenium and fivem-appearance is WIP, or you can figure it out yourself.
-
-#### `qb-clothing`
-- Go to `qb-clothing/client/main.lua` and comment out everything inside the `openMenu` function as shown below:
-    ```lua
-    local function openMenu(allowedMenus)
-        -- previousSkinData = json.encode(skinData)
-        -- creatingCharacter = true
-        -- PlayerData = QBCore.Functions.GetPlayerData()
-        -- local trackerMeta = PlayerData.metadata["tracker"]
-        -- local translations = {}
-        -- for k in pairs(Lang.fallback and Lang.fallback.phrases or Lang.phrases) do
-        --     if k:sub(0, ('ui.'):len()) then
-        --         translations[k:sub(('ui.'):len() + 1)] = Lang:t(k)
-        --     end
-        -- end
-        -- GetMaxValues()
-        -- SendNUIMessage({
-        --     action = "open",
-        --     menus = allowedMenus,
-        --     currentClothing = skinData,
-        --     hasTracker = trackerMeta,
-        --     translations = translations,
-        -- })
-        -- SetNuiFocus(true, true)
-        -- SetCursorLocation(0.9, 0.25)
-        -- FreezeEntityPosition(PlayerPedId(), true)
-        -- enableCam()
-    end
-    ```
-
-- Go to `qb-clothing/client/main.lua` around `line 1437` and change the `QBCore:Client:OnPlayerLoaded` event to the following:
-    ```lua
-    RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-        -- TriggerServerEvent("qb-clothes:loadPlayerSkin")
-        PlayerData = QBCore.Functions.GetPlayerData()
-        exports.bl_appearance:SetPlayerPedAppearance(PlayerData.citizenid)
-        -- loadStores()
+        cb(appearance.model, appearance.skin)
     end)
     ```
 
-- To keep the resource functioning only when needed, go to `qb-clothing/client/main.lua` around `line 1582`, and add `--[[` above the `refreshskin` command and `]]` at the end of the file like below:
+### 2. Modify `cDataPed` RegisterNUICallback
+- Go to the `cDataPed` callback around `line 206` in `client/main.lua` and replace the event with the following:
     ```lua
-    --[[
-    -- Commands
-    RegisterCommand("refreshskin", function()
-    ...
-    ]]
+    RegisterNUICallback('cDataPed', function(nData, cb)
+        local cData = nData.cData
+        SetEntityAsMissionEntity(charPed, true, true)
+        DeleteEntity(charPed)
+        if cData ~= nil then
+            if not cached_player_skins[cData.citizenid] then
+                local resolved_data = exports.bl_appearance:GetPlayerPedAppearance(cData.citizenid) or {}
+                local resolved_model = resolved_data.model
+
+                cached_player_skins[cData.citizenid] = {model = resolved_model, data = resolved_data}
+            end
+
+            local model = cached_player_skins[cData.citizenid].model
+            local data = cached_player_skins[cData.citizenid].data
+
+            model = model ~= nil and tonumber(model) or false
+
+            if model ~= nil then
+                initializePedModel(model, data)
+            else
+                initializePedModel()
+            end
+            cb("ok")
+        else
+            initializePedModel()
+            cb("ok")
+        end
+    end)
     ```
+
+### 3. Modify `initializePedModel` around `line 34` in `client/main.lua` and replace it with the following:
+    ```lua
+    local function initializePedModel(model, data)
+        CreateThread(function()
+            if not model then
+                model = joaat(randommodels[math.random(#randommodels)])
+            end
+            loadModel(model)
+            charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98, Config.PedCoords.w, false, true)
+            SetPedComponentVariation(charPed, 0, 0, 0, 2)
+            FreezeEntityPosition(charPed, false)
+            SetEntityInvincible(charPed, true)
+            PlaceObjectOnGroundProperly(charPed)
+            SetBlockingOfNonTemporaryEvents(charPed, true)
+            if data and data.model then
+                exports.bl_appearance:SetPedAppearance(charPed, data) 
+            end
+        end)
+    end
+    ```
+
+### 4. Remove previous dependencies
+    - Remove `qb-clothing` from the `dependencies` in `fxmanifest.lua` of `qb-houses` and `qb-apartments`
 </Steps>
