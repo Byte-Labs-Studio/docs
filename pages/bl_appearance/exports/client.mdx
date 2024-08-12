@@ -13,6 +13,22 @@ Below are the appearance exports that are available to use in your resource. Fro
     exports.bl_appearance:InitialCreation(cb: function)
 ```
 
+### OpenMenu
+- This function will open the menu for the player.
+- The argument is the menu type to open.
+- Parameters:
+    - menuType: string The menu type to open.
+```lua
+    exports.bl_appearance:OpenMenu(menuType: string)
+```
+- You can also emulate opening a zone which opens up more options, like blacklisted clothings.
+```lua
+    exports.bl_appearance:OpenMenu({
+        type = "appearance", -- types from your data/menus.lua
+        jobs = {'police'}
+    })
+```
+
 ## Setters
 
 ### SetPlayerPedAppearance
