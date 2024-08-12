@@ -4,6 +4,212 @@ import { Steps } from 'nextra/components'
 ESX Installation
 ---
 
+
+<Steps>
+### 1. Add `esx_skin:getPlayerSkin` callback in `esx_identity > server > main.lua`
+- Note: This will change the return of the callback to the object structure of `TAppearance`. Go to `line 5` in `server/main.lua` and add the following:
+```lua
+ESX.RegisterServerCallback("esx_skin:getPlayerSkin", function(source, cb)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local id = xPlayer.identifier
+
+    local appearance = exports.bl_appearance:GetAppearance(id)
+
+    cb(appearance, appearance)
+end)
+```
+
+
+### 2. Modify `esx_extended > server > main.lua > line 6`
+From 
+```lua
+local loadPlayer = "SELECT `accounts`, `job`, `job_grade`, `group`, `position`, `inventory`, `skin`, `loadout`, `metadata`"
+```
+To
+```lua
+local loadPlayer = "SELECT `accounts`, `job`, `job_grade`, `group`, `position`, `inventory`, `loadout`, `metadata`"
+```
+
+### 3. Modify `esx_multicharacter > server > main.lua > line 54`
+- Modify the `SetupCharacters` function with the following:
+```lua
+local function SetupCharacters(source)
+    while not databaseConnected do
+        Wait(100)
+    end
+
+    local identifier = GetIdentifier(source)
+    ESX.Players[identifier] = true
+
+    local slots = MySQL.scalar.await("SELECT slots FROM multicharacter_slots WHERE identifier = ?", { identifier }) or SLOTS
+    identifier = PREFIX .. "%:" .. identifier
+
+    local result = MySQL.query.await("SELECT identifier, accounts, job, job_grade, firstname, lastname, dateofbirth, sex, disabled FROM users WHERE identifier LIKE ? LIMIT ?", { identifier, slots })
+    local characters
+
+    if result then
+        local characterCount = #result
+        characters = table.create(0, characterCount)
+
+        for i = 1, characterCount, 1 do
+            local v = result[i]
+            local job, grade = v.job or "unemployed", tostring(v.job_grade)
+
+            if ESX.Jobs[job] and ESX.Jobs[job].grades[grade] then
+                if job ~= "unemployed" then
+                    grade = ESX.Jobs[job].grades[grade].label
+                else
+                    grade = ""
+                end
+                job = ESX.Jobs[job].label
+            end
+
+            local accounts = json.decode(v.accounts)
+            local id = tonumber(string.sub(v.identifier, #PREFIX + 1, string.find(v.identifier, ":") - 1))
+
+            characters[id] = {
+                id = id,
+                bank = accounts.bank,
+                money = accounts.money,
+                job = job,
+                job_grade = grade,
+                firstname = v.firstname,
+                lastname = v.lastname,
+                dateofbirth = v.dateofbirth,
+                skin = exports.bl_appearance:GetAppearance(v.identifier),
+                disabled = v.disabled,
+                sex = v.sex == "m" and TranslateCap("male") or TranslateCap("female"),
+            }
+        end
+    end
+
+    TriggerClientEvent("esx_multicharacter:SetupUI", source, characters, slots)
+end
+```
+
+### 4. Modify `esx_multicharacter > client > main.lua` around `line 200` inside `SelectCharacterMenu` function
+- Replace the following:
+```lua
+if not v.model and v.skin then
+    if v.skin.model then
+        v.model = v.skin.model
+    elseif v.skin.sex == 1 then
+        v.model = mp_f_freemode_01
+    else
+        v.model = mp_m_freemode_01
+    end
+end
+```
+With
+```lua
+if not v.model and v.skin then
+    if v.skin.model then
+        v.model = v.skin.model
+    else
+        v.model = mp_m_freemode_01
+    end
+end
+```
+
+### 5. Modify the `AddEventHandler` of `esx:playerLoaded` in `esx_multicharacter > client > main.lua` around `line 285` to the following:
+```lua
+AddEventHandler("esx:playerLoaded", function(playerData, isNew, skin)
+    local spawn = playerData.coords or Config.Spawn
+    if isNew or not skin or #skin == 1 then
+        local finished = false
+        skin = Config.Default[playerData.sex]
+        skin.sex = playerData.sex == "m" and 0 or 1
+        local model = skin.sex == 0 and mp_m_freemode_01 or mp_f_freemode_01
+        RequestModel(model)
+        while not HasModelLoaded(model) do
+            RequestModel(model)
+            Wait(0)
+        end
+        SetPlayerModel(PlayerId(), model)
+        SetModelAsNoLongerNeeded(model)
+        repeat
+            Wait(200)
+        until finished
+    end
+
+    DoScreenFadeOut(750)
+    Wait(750)
+
+    SetCamActive(cam, false)
+    RenderScriptCams(false, false, 0, true, true)
+    cam = nil
+    local playerPed = PlayerPedId()
+    FreezeEntityPosition(playerPed, true)
+    SetEntityCoordsNoOffset(playerPed, spawn.x, spawn.y, spawn.z, false, false, false, true)
+    SetEntityHeading(playerPed, spawn.heading)
+    if not isNew then
+        TriggerEvent("skinchanger:loadSkin", skin or Characters[spawned].skin)
+    end
+    Wait(500)
+
+    DoScreenFadeIn(750)
+    Wait(750)
+
+    repeat
+        Wait(200)
+    until not IsScreenFadedOut()
+    TriggerServerEvent("esx:onPlayerSpawn")
+    TriggerEvent("esx:onPlayerSpawn")
+    TriggerEvent("playerSpawned")
+    TriggerEvent("esx:restoreLoadout")
+    Characters, hidePlayers = {}, false
+end)
+```
+{/* 
+esx_skin
+
+skinchanger
+
+fivem-appearance
+
+esx_barbershop
+
+esx_clotheshop */}
+
+
+</Steps>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <Steps>
 ### Remove Current Resources
     ```

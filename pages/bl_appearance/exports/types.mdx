@@ -6,50 +6,94 @@ title: Object Structures
 
 Below are the structures of the appearance objects. It is useful to know if you want to use the appearance exports.
 
+
 ## Appearance for exports
+Below are the structures of the appearance objects. It is useful to know if you want to use the appearance exports.
+
+### TAppearance
+```ts
+type TAppearance = TClothes & TSkin & {
+    tattoos?: TTattoo[]
+
+    // These are only needed to open the Menu. In the future, this will be refactored to be its own type
+    modelIndex?: number
+    outfits?: Outfit[]
+}
+```
+
+### TClothes
 ```ts
 type TClothes = {
     headOverlay: THeadOverlay
     drawables: TDrawables
     props: TProps
 }
+```
 
+### TSkin
+```ts
 type TSkin = {
     headBlend: THeadBlend
     headStructure: THeadStructure
     hairColor: THairColor
     model: number
 }
+```
 
-type TAppearance = TClothes & TSkin & {
-    modelIndex?: number
-    tattoos?: TTattoo[]
-    outfits?: Outfit[]
+### TTattoo
+```ts
+type TTattoo = {
+    zoneIndex: number
+    dlcIndex: number
+    tattoo: TTattooEntry
+    id: number
 }
 ```
 
-## Appearance Index Types
+### Outfit
 ```ts
-type TValue = {
-	index: number
-	value: number
-	id?: string
-    texture?: number
+interface Outfit {
+    id?: number | string,
+    label: string,
+    outfit: TOutfitData,
+    jobname?: string,
+    job?: { name: string, rank: number } | null
 }
+```
 
+### TOutfitData 
+```ts
+type TOutfitData  = {
+    headOverlay: THeadOverlay
+    drawables: TDrawables
+    props: TProps;
+    job?: { name: string, rank: number } | null;
+}
+```
+
+### TProps
+```ts
 type TProps = {
     [key: string]: TValue
 }
+```
 
+### TDrawables
+```ts
 type TDrawables = {
 	[key: string]: TValue
 }
+```
 
+### THeadStructure
+```ts
 type THeadStructure = {
 	[key: string]: TValue
 }
+```
 
-
+### THeadOverlay
+```ts
 interface HeadOverlayData {
     id: string;
     index: number;
@@ -67,13 +111,19 @@ interface HeadOverlayData {
 type THeadOverlay = {
 	[key: string]: HeadOverlayData
 }
+```
 
+### THairColor
+```ts
 type THairColor = {
 	highlight: number
 	color: number
 }
+```
 
-interface THeadBlend  {
+### THeadBlend
+```ts
+type THeadBlend  = {
 	skinSecond: number
 	skinThird: number
 	shapeSecond: number
@@ -85,19 +135,24 @@ interface THeadBlend  {
 	thirdMix: number
 	skinFirst: number
 }
+```
 
+### TTattooEntry
+```ts
 type TTattooEntry = {
     label: string
     hash: number
     zone: number
     dlc?: string
 }
+```
 
-type TTattoo = {
-    zoneIndex: number
-    dlcIndex: number
-    tattoo: TTattooEntry
-    id: number
+### TValue
+```ts
+type TValue = {
+	index: number
+	value: number
+	id?: string
+    texture?: number
 }
-
 ```

@@ -1,0 +1,255 @@
+---
+title: Client
+---
+
+# Client Appearance Exports
+Below are the appearance exports that are available to use in your resource. From the client side.
+
+### InitialCreation
+- This function will set the position of the player ped and menu for them to create their appearance.
+- The argument is a callback function that will be called when the player has created their appearance.
+
+```lua
+    exports.bl_appearance:InitialCreation(cb: function)
+```
+
+### OpenMenu
+- This function will open the menu for the player.
+- The argument is the menu type to open.
+- Parameters:
+    - menuType: string The menu type to open.
+```lua
+    exports.bl_appearance:OpenMenu(menuType: string)
+```
+- You can also emulate opening a zone which opens up more options, like blacklisted clothings.
+```lua
+    exports.bl_appearance:OpenMenu({
+        type = "appearance", -- types from your data/menus.lua
+        jobs = {'police'}
+    })
+```
+
+## Setters
+
+### SetPlayerPedAppearance
+- This function will set the appearance for the player ped. Includes proper handling of the `PlayerPedId` reset.
+- If appearance is not provided, it will fetch the appearance from the database using the player's `identifier`.
+- Parameters:
+    - appearance: [TAppearance](./types#TAppearance) The appearance to set the player ped to.
+```lua
+    exports.bl_appearance:SetPlayerPedAppearance(appearance?: TAppearance)
+```
+
+### SetPedAppearance
+- This function will set the appearance of a specific ped. If the player ped is passed in, it will redirect to `SetPlayerPedAppearance` automatically.
+- If appearance is not provided, it will return early before anything else happens.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - - appearance: [TAppearance](./types#TAppearance): The appearance to set the ped to.
+```lua
+    exports.bl_appearance:SetPedAppearance(ped: number, appearance: TAppearance)
+```
+
+### SetPedSkin
+- This function will set the skin of the ped.
+- This will not change the clothes of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - skin: [TSkin](./types#TSkin) The skin to set the ped to.
+```lua
+    exports.bl_appearance:SetPedSkin(ped: number, skin: TSkin)
+```
+
+### SetPedClothes
+- This function will set the clothes of for the ped.
+- This will not change the skin of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - clothes: [TClothes](./types#TClothes) The clothes to set the ped to.
+```lua
+    exports.bl_appearance:SetPedClothes(ped: number, clothes: TClothes)
+```
+
+### SetPedTattoos
+- This function will set the tattoos of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - tattoo: [TTattoos](./types#TTattoo) The tattoos to set the ped to.
+```lua
+    exports.bl_appearance:SetPedTattoos(ped: number, tattoos: TTattoo[])
+```
+
+### SetPedHairColors
+- This function will set the hair colors of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - hairColor: [THairColor](./types#THairColor) The hair color to set the ped to.
+```lua
+    exports.bl_appearance:SetPedHairColors(ped: number, hairColor: THairColor)
+```
+
+### SetPedHeadOverlay
+- This function will set the head overlay of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - headOverlay: [THeadOverlay](./types#THeadOverlay) The head overlay to set the ped to.
+```lua
+    exports.bl_appearance:SetPedHeadOverlay(ped: number, headOverlay: THeadOverlay)
+```
+
+### SetPedHeadBlend
+- This function will set the head blend of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - headBlend: [THeadBlend](./types#THeadBlend) The head blend to set the ped to.
+```lua
+    exports.bl_appearance:SetPedHeadBlend(ped: number, headBlend: THeadBlend)
+```
+
+### SetPedFaceFeature
+- This function will set a specific face feature of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - feature: [TValue](./types#TValue) The face feature to set the ped to.
+```lua
+    exports.bl_appearance:SetPedFaceFeature(ped: number, feature: TValue)
+```
+
+### SetPedFaceFeatures
+- This function will set the face features of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - faceFeatures: [TFaceFeature](./types#TFaceFeature) The face feature to set the ped to.
+```lua
+    exports.bl_appearance:SetPedFaceFeatures(ped: number, feature: TFaceFeature)
+```
+
+### SetPedModel
+- This function will set the model of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - data: number | string | [TAppearance](./types#TAppearance) The model to set the ped to. If a number is passed in, it will set the ped to that model. If a string is passed in, it will set the ped to the hash. If a TAppearance is passed in, it will apply the model with the headblend and head structure of the appearance.
+```lua
+    exports.bl_appearance:SetPedModel(ped: number, data: number | string | TAppearance)
+```
+
+### SetPedProp
+- This function will set a specific prop of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - data: [TValue](./types#TValue) The prop to set the ped to.
+```lua
+    exports.bl_appearance:SetPedProp(ped: number, prop: TValue)
+```
+
+### SetPedDrawable
+- This function will set a specific drawable of the ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+    - data: [TValue](./types#TValue) The drawable to set the ped to.
+```lua
+    exports.bl_appearance:SetPedDrawable(ped: number, data: TValue)
+```
+
+
+## Getters
+
+### GetPlayerPedAppearance
+- This function will return the appearance of the player ped.
+- The argument is the frameworkID of the player. But if its not provided, it will return the player's appearance.
+- Parameters:
+    - frameworkID: number The frameworkID of the player.
+- Return: [TAppearance](./types#TAppearance) The appearance of the player ped.
+```lua
+    exports.bl_appearance:GetPlayerPedAppearance(frameworkID?: number): TAppearance
+```
+
+### GetPedAppearance
+- This function will return the appearance of a ped. This is an async function.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [TAppearance](./types#TAppearance) The appearance of the ped.
+```lua
+    exports.bl_appearance:GetPedAppearance(ped: number): TAppearance
+```
+
+### GetPedSkin
+- This function will return the skin of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [TSkin](./types#TSkin) The skin of the ped.
+```lua
+    exports.bl_appearance:GetPedSkin(ped: number): TSkin
+```
+
+### GetDrawables
+- This function will return the clothes of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [TClothes](./types#TClothes) The clothes of the ped.
+```lua
+    exports.bl_appearance:GetDrawables(ped: number): TClothes
+```
+
+### GetPlayerTattoos
+- This function will return the tattoos of the player. There is no ped version of this function.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [TTattoos](./types#TTattoo) The tattoos of the ped.
+```lua
+    exports.bl_appearance:GetPlayerTattoos(ped: number): TTattoo[]
+```
+
+### GetPedHairColor
+- This function will return the hair color of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [THairColor](./types#THairColor) The hair color of the ped.
+```lua
+    exports.bl_appearance:GetPedHairColor(ped: number): THairColor
+```
+
+### GetPedHeadOverlay
+- This function will return the head overlay of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [THeadOverlay](./types#THeadOverlay) The head overlay of the ped.
+```lua
+    exports.bl_appearance:GetPedHeadOverlay(ped: number): THeadOverlay
+```
+
+### GetPedHeadBlend
+- This function will return the head blend of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [THeadBlend](./types#THeadBlend) The head blend of the ped.
+```lua
+    exports.bl_appearance:GetPedHeadBlend(ped: number): THeadBlend
+```
+
+### GetPedHeadStructure
+- This function will return the head structure of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [THeadStructure](./types#THeadStructure) The head structure of the ped.
+```lua
+    exports.bl_appearance:GetPedHeadStructure(ped: number): THeadStructure
+```
+
+### GetPedProps
+- This function will return the props of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [TProps](./types#TProps) The props of the ped.
+```lua
+    exports.bl_appearance:GetPedProps(ped: number): TProps
+```
+
+### GetPedDrawables
+- This function will return the drawables of a ped.
+- Parameters:
+    - ped: number Any valid Ped Id.
+- Return: [TDrawables](./types#TDrawables) The drawables of the ped.
+```lua
+    exports.bl_appearance:GetPedDrawables(ped: number): TDrawables
+```
