@@ -2,7 +2,17 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>Byte Labs</span>,
+  logo: <div
+    style={{
+      paddingLeft: '3rem',
+      lineHeight: '2rem',
+      background: "url('/static/logo.png') no-repeat left",
+      backgroundSize: '3rem',
+      fontWeight: 500,
+    }}
+  >
+    Byte Labs
+  </div>,
   project: {
     link: 'https://github.com/Byte-Labs-Studio',
   },
