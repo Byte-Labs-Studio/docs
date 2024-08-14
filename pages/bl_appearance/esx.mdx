@@ -22,7 +22,7 @@ ESX.RegisterServerCallback("esx_skin:getPlayerSkin", function(source, cb)
     local xPlayer = ESX.GetPlayerFromId(source)
     local id = xPlayer.identifier
 
-    local appearance = exports.bl_appearance:GetAppearance(id)
+    local appearance = exports.bl_appearance:GetPlayerAppearance(id)
 
     cb(appearance, appearance)
 end)
@@ -85,7 +85,7 @@ local function SetupCharacters(source)
                 firstname = v.firstname,
                 lastname = v.lastname,
                 dateofbirth = v.dateofbirth,
-                skin = exports.bl_appearance:GetAppearance(v.identifier),
+                skin = exports.bl_appearance:GetPlayerAppearance(v.identifier),
                 disabled = v.disabled,
                 sex = v.sex == "m" and TranslateCap("male") or TranslateCap("female"),
             }
@@ -136,14 +136,17 @@ AddEventHandler("esx:playerLoaded", function(playerData, isNew, skin)
         end
         SetPlayerModel(PlayerId(), model)
         SetModelAsNoLongerNeeded(model)
+        exports.bl_appearance:InitialCreation(function()
+            finished = true
+        end)
         repeat
             Wait(200)
         until finished
     end
-
+ 
     DoScreenFadeOut(750)
     Wait(750)
-
+ 
     SetCamActive(cam, false)
     RenderScriptCams(false, false, 0, true, true)
     cam = nil
@@ -155,10 +158,10 @@ AddEventHandler("esx:playerLoaded", function(playerData, isNew, skin)
         TriggerEvent("skinchanger:loadSkin", skin or Characters[spawned].skin)
     end
     Wait(500)
-
+ 
     DoScreenFadeIn(750)
     Wait(750)
-
+ 
     repeat
         Wait(200)
     until not IsScreenFadedOut()
