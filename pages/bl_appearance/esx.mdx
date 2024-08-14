@@ -15,7 +15,7 @@ ESX Installation
     All esx_skin, skinchanger dependency
     ```
 
-### 1. Add `esx_skin:getPlayerSkin` callback in `esx_identity > server > main.lua`
+### Add `esx_skin:getPlayerSkin` callback in `esx_identity > server > main.lua`
 - Note: This will change the return of the callback to the object structure of `TAppearance`. Go to `line 5` in `server/main.lua` and add the following:
 ```lua
 ESX.RegisterServerCallback("esx_skin:getPlayerSkin", function(source, cb)
@@ -29,7 +29,7 @@ end)
 ```
 
 
-### 2. Modify `esx_extended > server > main.lua > line 6`
+### Modify `esx_extended > server > main.lua > line 6`
 From 
 ```lua
 local loadPlayer = "SELECT `accounts`, `job`, `job_grade`, `group`, `position`, `inventory`, `skin`, `loadout`, `metadata`"
@@ -39,7 +39,7 @@ To
 local loadPlayer = "SELECT `accounts`, `job`, `job_grade`, `group`, `position`, `inventory`, `loadout`, `metadata`"
 ```
 
-### 3. Modify `esx_multicharacter > server > main.lua > line 54`
+### Modify `esx_multicharacter > server > main.lua > line 54`
 - Modify the `SetupCharacters` function with the following:
 ```lua
 local function SetupCharacters(source)
@@ -96,7 +96,7 @@ local function SetupCharacters(source)
 end
 ```
 
-### 4. Modify `esx_multicharacter > client > main.lua` around `line 200` inside `SelectCharacterMenu` function
+### Modify `esx_multicharacter > client > main.lua` around `line 200` inside `SelectCharacterMenu` function
 - Replace the following:
 ```lua
 if not v.model and v.skin then
@@ -120,7 +120,7 @@ if not v.model and v.skin then
 end
 ```
 
-### 5. Modify the `AddEventHandler` of `esx:playerLoaded` in `esx_multicharacter > client > main.lua` around `line 285` to the following:
+### Modify the `AddEventHandler` of `esx:playerLoaded` in `esx_multicharacter > client > main.lua` around `line 285` to the following:
 ```lua
 AddEventHandler("esx:playerLoaded", function(playerData, isNew, skin)
     local spawn = playerData.coords or Config.Spawn
