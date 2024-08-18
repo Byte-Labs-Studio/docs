@@ -12,7 +12,7 @@ local inventory = Framework.inventory or exports.bl_bridge:inventory()
 ```lua
 local player = core.GetPlayer(source)
 player.addItem(item, amount, metadata, slot)
-player.removeItem(item, amount)
+player.removeItem(item, amount, slot)
 player.getItem(item)
 player.items -- get player items
 ```
@@ -27,7 +27,7 @@ player.items -- get player items
 core.RegisterUsableItem(item, cb)
 ```
 - item: `string`
-- cb: `function`
+- cb: `function(source, slotId, metadata)`
 
 ## registerInventory
 ```lua
