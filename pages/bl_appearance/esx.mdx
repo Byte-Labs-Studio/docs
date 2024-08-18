@@ -15,8 +15,8 @@ ESX Installation
     All esx_skin, skinchanger dependency
     ```
 
-### Add `esx_skin:getPlayerSkin` callback in `esx_identity > server > main.lua`
-- Note: This will change the return of the callback to the object structure of `TAppearance`. Go to `line 5` in `server/main.lua` and add the following:
+### Replace `esx_skin:getPlayerSkin` callback in `esx_identity > server > main.lua`
+- Note: This will change the return of the callback to the object structure of `TAppearance`. Go to `line 5` in `server/main.lua` and replace the following:
 ```lua
 ESX.RegisterServerCallback("esx_skin:getPlayerSkin", function(source, cb)
     local xPlayer = ESX.GetPlayerFromId(source)
