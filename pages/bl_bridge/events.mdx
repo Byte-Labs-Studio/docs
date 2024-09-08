@@ -1,0 +1,68 @@
+# Event Triggers
+
+### Player Loaded Event
+
+```lua
+AddEventHandler('bl_bridge:client:playerLoaded', function()
+    print('loaded')
+end)
+```
+
+### Player UnLoaded Event
+```lua
+ AddEventHandler('bl_bridge:client:playerUnloaded', function()
+    print('unloaded')
+end)
+```
+
+### Job Update Event
+```lua
+ AddEventHandler('bl_bridge:client:jobUpdated', function(job)
+ end)
+```
+#### Job Information
+- **Name**: `job.name`  
+  The name of the job.
+
+- **Label**: `job.label`  
+  The label or display name for the job.
+
+- **On Duty**: `job.onduty`  
+  Boolean indicating if the job is currently on duty.
+
+- **Type**: `job.type`  
+  The type/category of the job.
+
+- **Is Boss**: `job.isboss`  
+  Boolean indicating if the job role is a boss.
+
+- **Grade**: 
+  - **Name**: `job.grade.level`  
+    The name of the grade/level within the job.
+  - **Label**: `job.grade.name`  
+    The label or display name of the grade.
+  - **Salary**: `job.payment`  
+    The salary associated with the grade.
+
+
+### Gang Update Event
+```lua
+ AddEventHandler('bl_bridge:client:gangUpdated', function(gang)
+ end)
+```
+#### Gang Information
+
+- **Name**: `gang.name`  
+  The name of the gang.
+
+- **Label**: `gang.label`  
+  The label or display name for the gang.
+
+- **Is Boss**: `gang.isboss`  
+  Boolean indicating if the gang role is a boss.
+
+- **Grade**: 
+  - **Name**: `gang.grade.level`  
+    The name of the grade/level within the gang.
+  - **Label**: `gang.grade.label`  
+    The label or display name of the grade.
