@@ -1,0 +1,22 @@
+# Event Triggers
+
+### Player Loaded Event
+
+```lua
+TriggerEvent('bl_bridge:client:playerLoaded')
+```
+
+### Player UnLoaded Event
+```lua
+ TriggerEvent('bl_bridge:client:playerUnloaded')
+```
+
+### Job Update Event
+```lua
+ TriggerEvent('bl_bridge:client:jobUpdated', { name = job.name, label = job.label, onDuty = job.onduty, type = job.type, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } })
+```
+
+### Gang Update Event
+```lua
+ TriggerEvent('bl_bridge:client:gangUpdated', { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } })
+```
