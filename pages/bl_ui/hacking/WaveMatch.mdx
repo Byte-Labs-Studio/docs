@@ -1,0 +1,24 @@
+---
+title: Wave Match
+---
+## Wave Match
+
+The player must press the key when the the segment is inside the target zone.
+    
+```lua
+    local success = exports.bl_ui:WaveMatch(iterations, config)
+```
+
+- iterations: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- config: `table`
+    - duration: `number`
+
+#### Example
+```lua
+local success = exports.bl_ui:WaveMatch(3, {
+    duration = 5000,
+})
+```
+#### Preview
+![WaveMatchExample](/static/WaveMatch.png)

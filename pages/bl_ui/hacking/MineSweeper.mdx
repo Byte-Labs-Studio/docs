@@ -1,0 +1,25 @@
+---
+title: Mine Sweeper
+---
+## Mine Sweeper
+
+The player must press the key when the the segment is inside the target zone.
+    
+```lua
+    local success = exports.bl_ui:MineSweeper(iterations, config)
+```
+
+- iterations: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- config: `GridConfig`
+
+#### Example
+```lua
+local success = exports.bl_ui:MineSweeper(3, {
+    grid = 4,
+    duration = 5000,
+    target = 4
+})
+```
+#### Preview
+![MineSweeperExample](/static/MineSweeper.png)

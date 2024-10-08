@@ -1,0 +1,25 @@
+---
+title: Lights Out
+---
+## Lights Out
+
+The player must press the key when the the segment is inside the target zone.
+    
+```lua
+    local success = exports.bl_ui:LightsOut(iterations, config)
+```
+
+- iterations: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- config: `LevelConfig`
+
+#### Example
+```lua
+local success = exports.bl_ui:LightsOut(3, {
+    level = 2,
+    duration = 5000,
+})
+```
+
+#### Preview
+![LightsOutExample](/static/LightsOut.png)

@@ -1,0 +1,25 @@
+---
+title: Path Find
+---
+## Path Find
+
+The player must press the key when the the segment is inside the target zone.
+    
+```lua
+    local success = exports.bl_ui:PathFind(iterations, config)
+```
+
+- iterations: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- config: `NodeConfig`
+
+#### Example
+```lua
+local success = exports.bl_ui:PathFind(3, {
+    numberOfNodes = 10,
+    duration = 5000,
+})
+```
+
+#### Preview
+![PathFindExample](/static/PathFind.png)

@@ -1,0 +1,24 @@
+---
+title: Word Wiz
+---
+## Word Wiz
+
+The player must press the key when the the segment is inside the target zone.
+    
+```lua
+    local success = exports.bl_ui:WordWiz(iterations, config)
+```
+
+- iterations: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- config: `LengthConfig`
+
+#### Example
+```lua
+local success = exports.bl_ui:WordWiz(3, {
+    length = 4,
+    duration = 5000,
+})
+```
+#### Preview
+![WordWizExample](/static/WordWiz.png)

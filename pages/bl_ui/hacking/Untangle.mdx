@@ -1,0 +1,22 @@
+
+## Untangle
+
+The player must press the key when the the segment is inside the target zone.
+    
+```lua
+    local success = exports.bl_ui:Untangle(iterations, config)
+```
+
+- iterations: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- config: `NodeConfig`
+
+#### Example
+```lua
+local success = exports.bl_ui:Untangle(3, {
+    numberOfNodes = 10,
+    duration = 5000,
+})
+```
+#### Preview
+![UntangleExample](/static/Untangle.png)

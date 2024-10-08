@@ -1,0 +1,25 @@
+---
+title: Circle Sum
+---
+
+## Circle Sum
+
+The player must press the key when the the segment is inside the target zone.
+    
+```lua
+    local success = exports.bl_ui:CircleSum(iterations, config)
+```
+
+- iterations: `number` is the amount of iterations the player has to complete.
+    - 1 is the default iteration.
+- config: `LengthConfig`
+
+#### Example
+```lua
+local success = exports.bl_ui:CircleSum(3, {
+    length = 4,
+    duration = 5000,
+})
+```
+#### Preview
+![CircleSumExample](/static/CircleSum.png)
