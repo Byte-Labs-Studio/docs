@@ -16,9 +16,10 @@ The player must press the key when the the segment is inside the target zone.
 #### Example
 ```lua
 local success = exports.bl_ui:MineSweeper(3, {
-    grid = 4,
-    duration = 5000,
-    target = 4
+    grid = 4, -- grid 4x4
+    duration = 10000, -- 10sec to fail
+    target = 4, --you need to remember 4 target
+    previewDuration = 2000 --preview duration (time for red mines preview to hide)
 })
 ```
 #### Preview
