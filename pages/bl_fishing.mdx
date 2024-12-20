@@ -1,0 +1,371 @@
+import ResourceLinks from '@components/resource-links';
+import { Steps } from 'nextra/components'
+
+# BL FISHING 
+
+## [**Preview**](https://www.youtube.com/watch?v=bRI-jsMl8_o)
+## Installation
+
+<Steps>
+### Download the latest from [Keymaster](https://keymaster.fivem.net).
+
+### Download dependencies 
+#### [**ox_lib**](https://github.com/overextended/ox_lib/releases/download/v3.27.0/ox_lib.zip)
+#### [**bl_bridge**](https://github.com/Byte-Labs-Studio/bl_bridge)
+#### [**bl_sprites**](https://github.com/Byte-Labs-Studio/bl_sprites)
+#### [**bl_dialog**](https://github.com/Byte-Labs-Studio/bl_dialog/releases/download/v1.1.0/bl_dialog.zip)
+
+### Extract the contents of the zip file into your `resources` folder.
+
+### Add `ensure bl_fishing` and dependencies to your `server.cfg` file.
+
+### Add items images you can find in `bl_fishing/images`
+### Add needed items you can find below 
+</Steps>
+
+# Items
+## OX items data
+```lua
+-- rod
+["fishing_rod"] = {
+    label = "Fishing Rod",
+    weight = 5000,
+    stack = false,
+    close = false,
+    description = "Fishing Rod?.",
+},
+-- baits
+["worm"] = {
+    label = "Worm",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A wriggling bait that fish find irresistible. Perfect for freshwater catches.",
+},
+["minnows"] = {
+    label = "Minnows",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A small, lively bait fish. Great for attracting larger predators.",
+},
+["fakefish"] = {
+    label = "Fake Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A clever imitation of a small fish. Use it to fool even the wisest catches.",
+},
+["cutbait"] = {
+    label = "Cut Bait",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "Chunks of bait fish, ideal for luring in bigger game from the depths.",
+},
+["camp_fire"] = {
+    label = "Camp Fire",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "Camp Fire.",
+},
+
+--baits farm
+["wormspowder"] = {
+    label = "Worms Powder",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "Finely ground worms, ideal for enhancing your bait and luring in a wider range of fish.",
+},
+["minnowstrap"] = {
+    label = "Minnows Trap",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A handy trap designed to catch minnows effortlessly. A must-have for any serious angler.",
+},
+
+--fishes
+["fish_1"] = {
+    label = "Silver Small Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A shimmering small fish with a sleek silver sheen. Ideal for quick catches and lively presentations.",
+},
+["fish_2"] = {
+    label = "Bronze Small Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A hardy small fish adorned with a rich bronze hue. Perfect for attracting a variety of freshwater species.",
+},
+["fish_3"] = {
+    label = "Gold Small Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A vibrant small fish with a lustrous gold finish. Great for adding a touch of brilliance to your bait.",
+},
+["fish_4"] = {
+    label = "Silver Medium Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A medium-sized fish with a striking silver appearance. Excellent for targeting both small and medium predators.",
+},
+["fish_5"] = {
+    label = "Bronze Medium Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A robust medium fish featuring a deep bronze coloration. Perfect for enticing larger freshwater catches.",
+},
+["fish_6"] = {
+    label = "Gold Medium Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A medium fish with a brilliant gold shine. Ideal for attracting a diverse range of fish species.",
+},
+["fish_7"] = {
+    label = "Silver Big Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A large fish boasting a dazzling silver exterior. Perfect for hooking the biggest and most elusive catches.",
+},
+["fish_8"] = {
+    label = "Bronze Big Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A substantial big fish with a commanding bronze presence. Excellent for luring in the toughest predators.",
+},
+["fish_9"] = {
+    label = "Gold Big Fish",
+    weight = 100,
+    stack = true,
+    close = false,
+    description = "A majestic big fish featuring a radiant gold finish. Ideal for attracting the most prized and rare catches.",
+},
+
+```
+
+## QB items data
+```lua
+-- rod
+['fishing_rod'] = {
+    ['name'] = 'fishing_rod',
+    ['label'] = 'Fishing Rod',
+    ['weight'] = 5000,
+    ['type'] = 'item',
+    ['image'] = 'fishing_rod.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'Fishing Rod?.'
+},
+
+-- baits
+['worm'] = {
+    ['name'] = 'worm',
+    ['label'] = 'Worm',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'worm.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A wriggling bait that fish find irresistible. Perfect for freshwater catches.'
+},
+['minnows'] = {
+    ['name'] = 'minnows',
+    ['label'] = 'Minnows',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'minnows.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A small, lively bait fish. Great for attracting larger predators.'
+},
+['fakefish'] = {
+    ['name'] = 'fakefish',
+    ['label'] = 'Fake Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fakefish.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A clever imitation of a small fish. Use it to fool even the wisest catches.'
+},
+['cutbait'] = {
+    ['name'] = 'cutbait',
+    ['label'] = 'Cut Bait',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'cutbait.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'Chunks of bait fish, ideal for luring in bigger game from the depths.'
+},
+['camp_fire'] = {
+    ['name'] = 'camp_fire',
+    ['label'] = 'Camp Fire',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'camp_fire.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'Camp Fire.'
+},
+
+-- baits farm
+['wormspowder'] = {
+    ['name'] = 'wormspowder',
+    ['label'] = 'Worms Powder',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'wormspowder.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'Finely ground worms, ideal for enhancing your bait and luring in a wider range of fish.'
+},
+['minnowstrap'] = {
+    ['name'] = 'minnowstrap',
+    ['label'] = 'Minnows Trap',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'minnowstrap.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A handy trap designed to catch minnows effortlessly. A must-have for any serious angler.'
+},
+
+-- fishes
+['fish_1'] = {
+    ['name'] = 'fish_1',
+    ['label'] = 'Silver Small Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_1.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A shimmering small fish with a sleek silver sheen. Ideal for quick catches and lively presentations.'
+},
+['fish_2'] = {
+    ['name'] = 'fish_2',
+    ['label'] = 'Bronze Small Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_2.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A hardy small fish adorned with a rich bronze hue. Perfect for attracting a variety of freshwater species.'
+},
+['fish_3'] = {
+    ['name'] = 'fish_3',
+    ['label'] = 'Gold Small Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_3.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A vibrant small fish with a lustrous gold finish. Great for adding a touch of brilliance to your bait.'
+},
+['fish_4'] = {
+    ['name'] = 'fish_4',
+    ['label'] = 'Silver Medium Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_4.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A medium-sized fish with a striking silver appearance. Excellent for targeting both small and medium predators.'
+},
+['fish_5'] = {
+    ['name'] = 'fish_5',
+    ['label'] = 'Bronze Medium Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_5.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A robust medium fish featuring a deep bronze coloration. Perfect for enticing larger freshwater catches.'
+},
+['fish_6'] = {
+    ['name'] = 'fish_6',
+    ['label'] = 'Gold Medium Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_6.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A medium fish with a brilliant gold shine. Ideal for attracting a diverse range of fish species.'
+},
+['fish_7'] = {
+    ['name'] = 'fish_7',
+    ['label'] = 'Silver Big Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_7.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A large fish boasting a dazzling silver exterior. Perfect for hooking the biggest and most elusive catches.'
+},
+['fish_8'] = {
+    ['name'] = 'fish_8',
+    ['label'] = 'Bronze Big Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_8.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A substantial big fish with a commanding bronze presence. Excellent for luring in the toughest predators.'
+},
+['fish_9'] = {
+    ['name'] = 'fish_9',
+    ['label'] = 'Gold Big Fish',
+    ['weight'] = 100,
+    ['type'] = 'item',
+    ['image'] = 'fish_9.png',
+    ['unique'] = false,
+    ['useable'] = true,
+    ['shouldClose'] = false,
+    ['combinable'] = nil,
+    ['description'] = 'A majestic big fish featuring a radiant gold finish. Ideal for attracting the most prized and rare catches.'
+}
+
+```
